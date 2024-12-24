@@ -2,9 +2,9 @@ import FooterComponent from "@/components/footer/footer";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
-  subsets: ["latin"], // Optionnel : ajoutez des variantes
-  weight: ["400", "700"], // Optionnel : précisez les poids
-  variable: "--font-oswald", // Optionnel : créez une variable CSS
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-oswald",
 });
 
 const Home = () => {
