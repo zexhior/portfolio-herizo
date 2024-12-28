@@ -1,105 +1,27 @@
-"use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Form } from "@/components/ui/form";
-import { z } from "zod";
-import { Button } from "../ui/button";
-import CustomForm from "../customForm/customForm";
-import { useState } from "react";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "Votre nom doit comporter au moins 2 caractères" })
-    .max(100),
-  email: z.string().email({ message: "Veuillez saisir un adresse e-mail!" }),
-  subject: z
-    .string()
-    .nonempty({ message: "L'object de votre message ne doit pas être vide!" }),
-  message: z
-    .string()
-    .nonempty({ message: "Veuillez le message que vous souhaitez m'envoyer!" }),
-});
 
 const FooterComponent = () => {
-  const [customStyle, setCustomStyle] = useState("bg-white");
-  const [labelColor, setLabelColor] = useState("white");
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
-  });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    alert(
-      `Salutation ${values.name}! Votre message a été bien envoyé! Merci de bien patienter pour une réponse de ma part!`
-    );
-  };
-
   return (
-    <div className="sm:h-screen flex flex-wrap bg-gray-800">
-      <div className="w-screen flex justify-center">
-        <h2 className="text-white font-bold py-5 text-2xl">Contact</h2>
+    <div className="w-full flex justify-around text-white bg-blue-900 p-3 flex-1">
+      <div className="w-1/3 px-10 py-5 text-center">
+        <p>
+          Je suis disponible si vous avez besoin de mon service que ce soit pour
+          la réalisation d'un projet ou que ce soit pour une coopération. Vous
+          pouvez m'appeler ou m'envoyer un e-mail et je vous répondrais aussi
+          tôt que possible.{" "}
+        </p>
       </div>
-      <div className="w-screen md:w-1/2 px-12">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CustomForm
-              formControl={form}
-              label={"Votre nom : "}
-              labelColor={labelColor}
-              name="name"
-              placeholder="Name"
-              className={customStyle}
-            >
-              <Input />
-            </CustomForm>
-            <CustomForm
-              formControl={form}
-              label={"Votre e-mail : "}
-              labelColor={labelColor}
-              name="email"
-              placeholder="E-mail"
-              className={customStyle}
-            >
-              <Input />
-            </CustomForm>
-            <CustomForm
-              formControl={form}
-              label={"Object : "}
-              labelColor={labelColor}
-              name="subject"
-              placeholder="Objet"
-              className={customStyle}
-            >
-              <Input />
-            </CustomForm>
-            <CustomForm
-              formControl={form}
-              label={"Votre message : "}
-              labelColor={labelColor}
-              name="message"
-              placeholder="Message"
-              className={customStyle.concat(" h-48")}
-            >
-              <Textarea />
-            </CustomForm>
-            <Button>Envoyer</Button>
-          </form>
-        </Form>
+      <div className="w-1/3 px-10">
+        <h3 className="py-3 font-bold">Contact info</h3>
+        <div className="flex flex-col gap-2 text-gray-200">
+          <p>+261 38 26 264 28</p>
+          <p>herizoras1@gmail.com</p>
+          <p>II A 36 D Amboditsiry Madagascar</p>
+        </div>
       </div>
-      <div className="h-screen sm:h-auto w-screen md:w-1/2 flex flex-col sm:justify-start justify-center items-center">
-        <h3 className="text-white py-3">Mes contacts réseaux sociaux</h3>
-        <div className="flex justify-center w-full gap-5">
+      <div className="w-1/3 px-10">
+        <h3 className="py-3 font-bold">Réseaux sociaux</h3>
+        <div className="flex gap-5">
           <FaFacebook color="white" size={50} />
           <FaLinkedin color="white" size={50} />
           <FaGithub color="white" size={50} />
