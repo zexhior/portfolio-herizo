@@ -8,31 +8,40 @@ import {
 } from "../ui/navigation-menu";
 
 const NavbarComponent = () => {
+  const menu = [
+    {
+      title: "Accueil",
+      link: "/",
+    },
+    {
+      title: "Etudes",
+      link: "/etudes",
+    },
+    {
+      title: "Expériences",
+      link: "/experiences",
+    },
+    {
+      title: "Contact",
+      link: "/contacts",
+    },
+  ];
+
   return (
     <div className="flex justify-center w-full p-3">
       <NavigationMenu>
         <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Accueil
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Expériences
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Contacts
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+          {menu.map((item) => {
+            return (
+              <NavigationMenuItem>
+                <Link href={item.link} legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    {item.title}
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            );
+          })}
         </NavigationMenuList>
       </NavigationMenu>
     </div>
