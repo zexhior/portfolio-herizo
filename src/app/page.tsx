@@ -2,6 +2,18 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import {
+  FaFacebook,
+  FaGithub,
+  FaGithubAlt,
+  FaJava,
+  FaJs,
+  FaLinkedin,
+  FaNode,
+  FaReact,
+} from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Home = () => {
   gsap.registerPlugin(useGSAP);
@@ -12,15 +24,15 @@ const Home = () => {
     () => {
       gsap.fromTo(
         ".profile",
-        { scale: 0, transformOrigin: "center 40%", duration: 2 },
-        { scale: 1, duration: 2 }
+        { scale: 0, transformOrigin: "center 40%", duration: 1 },
+        { scale: 1, duration: 1 }
       );
       gsap.from(".last_name", { x: -1000, duration: 2 });
-      gsap.from(".first_name", { x: -1000, duration: 3, delay: 1 });
+      gsap.from(".first_name", { x: -1000, duration: 2, delay: 1 });
       gsap.fromTo(
         ".detail",
-        { opacity: 0, duration: 4, delay: 4 },
-        { opacity: 1, duraction: 4, delay: 4 }
+        { opacity: 0, duration: 4, delay: 3 },
+        { opacity: 1, duraction: 4, delay: 3 }
       );
     },
     { scope: container }
@@ -28,8 +40,8 @@ const Home = () => {
 
   return (
     <div className="w-full" ref={container}>
-      <div className="myself flex w-full h-screen items-center">
-        <div className="w-1/2  flex justify-center items-center">
+      <div className="pt-24 lg:pt-0 flex flex-wrap w-full lg:h-screen items-center bg-[url('/background.svg')] bg-cover">
+        <div className="w-full sm:w-1/2  flex justify-center items-center">
           <div
             className="rounded-full overflow-hidden profile"
             style={{ width: "300px", height: "300px" }}
@@ -37,7 +49,7 @@ const Home = () => {
             <img src="/my_image.jpg" alt={""} height="100%" />
           </div>
         </div>
-        <div className="w-1/2 p-4 overflow-hidden">
+        <div className="w-full sm:w-1/2 p-4 overflow-hidden">
           <h1 className="text-6xl font-bold py-4 text-slate-500 last_name">
             Bienvenue à vous!
           </h1>
@@ -53,6 +65,14 @@ const Home = () => {
               mobile offrant un design impeccable et attraillant avec une
               expérience utilisateur fluide et adapté à votre besoin.
             </p>
+            <Button className="w-min my-5">
+              <Link href={"/contacts"}>Me contacter</Link>
+            </Button>
+            <div className="flex gap-3 py-3">
+              <FaJs size={50} />
+              <FaNode size={50} />
+              <FaReact size={50} />
+            </div>
           </div>
         </div>
       </div>
