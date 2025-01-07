@@ -1,8 +1,18 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 
+type Professional = {};
+
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+};
+
 const ExperiencePage = () => {
-  const projects = [
+  const professional = [];
+
+  const projects: Project[] = [
     {
       title: "Application web Haikintana",
       description:
@@ -19,9 +29,9 @@ const ExperiencePage = () => {
   return (
     <div className="w-full">
       <div className="w-full ptf-data flex flex-wrap gap-3 p-11">
-        {projects.map((projet) => {
+        {projects.map((projet: Project, index: number) => {
           return (
-            <Card className="w-1/3">
+            <Card className="w-1/3" key={index}>
               <CardHeader
                 className="flex justify-center items-center overflow-hidden"
                 style={{ height: "300px" }}
