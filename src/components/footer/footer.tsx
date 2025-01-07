@@ -1,25 +1,38 @@
-import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaGithub,
+  FaHome,
+  FaLinkedin,
+  FaMailchimp,
+  FaPhone,
+} from "react-icons/fa";
+
+import { IoMdMail } from "react-icons/io";
 
 const FooterComponent = () => {
   return (
-    <div className="w-full flex justify-around text-white bg-blue-900 p-3 flex-1">
-      <div className="w-1/3 px-10 py-5 text-center">
-        <p>
-          Je suis disponible si vous avez besoin de mon service que ce soit pour
-          la réalisation d'un projet ou que ce soit pour une coopération. Vous
-          pouvez m'appeler ou m'envoyer un e-mail et je vous répondrais aussi
-          tôt que possible.{" "}
-        </p>
-      </div>
-      <div className="w-1/3 px-10">
-        <h3 className="py-3 font-bold">Contact info</h3>
+    <div className="w-full flex flex-wrap justify-around text-white bg-blue-900 p-10 flex-1">
+      <div className="w-full sm:w-1/2 px-10 flex">
         <div className="flex flex-col gap-2 text-gray-200">
-          <p>+261 38 26 264 28</p>
-          <p>herizoras1@gmail.com</p>
-          <p>II A 36 D Amboditsiry Madagascar</p>
+          <h3 className="pt-3 font-bold">Contact info</h3>
+
+          <div className="flex items-center gap-3">
+            <FaPhone size={15} color="white" />
+            <label>+261 38 26 264 28</label>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <IoMdMail size={15} color="white" />
+            <label>herizoras1@gmail.com</label>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <FaHome size={15} color="white" />
+            <p>II A 36 D Amboditsiry Madagascar</p>
+          </div>
         </div>
       </div>
-      <div className="w-1/3 px-10">
+      <div className="w-full sm:w-1/2 px-10 py-3 sm:py-0">
         <h3 className="py-3 font-bold">Réseaux sociaux</h3>
         <div className="flex gap-5">
           <FaFacebook color="white" size={50} />

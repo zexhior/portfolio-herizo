@@ -25,7 +25,7 @@ const CustomForm = ({
       render={({ field }) => {
         return (
           <FormItem className="mb-3">
-            <FormLabel className="text-gray-200">{label}</FormLabel>
+            <FormLabel className="text-black">{label}</FormLabel>
             <FormControl>
               {React.isValidElement(children)
                 ? React.cloneElement(children, { ...field, ...props })

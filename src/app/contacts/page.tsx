@@ -46,7 +46,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="flex flex-wrap bg-gray-600 p-2">
+    <div className="flex flex-wrap p-2">
       <div className="w-screen flex justify-center">
         <h2 className="text-white font-bold py-5 text-2xl">Contact</h2>
       </div>

@@ -7,8 +7,13 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 
+type Link = {
+  title: string;
+  link: string;
+};
+
 const NavbarComponent = () => {
-  const menu = [
+  const menu: Link[] = [
     {
       title: "Accueil",
       link: "/",
@@ -28,12 +33,12 @@ const NavbarComponent = () => {
   ];
 
   return (
-    <div className="flex justify-center w-full p-3">
+    <div className="flex justify-center w-full p-3 bg-white fixed z-10">
       <NavigationMenu>
         <NavigationMenuList>
-          {menu.map((item) => {
+          {menu.map((item: Link, index: number) => {
             return (
-              <NavigationMenuItem>
+              <NavigationMenuItem key={index}>
                 <Link href={item.link} legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     {item.title}
