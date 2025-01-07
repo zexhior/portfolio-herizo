@@ -2,16 +2,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import {
-  FaFacebook,
-  FaGithub,
-  FaGithubAlt,
-  FaJava,
-  FaJs,
-  FaLinkedin,
-  FaNode,
-  FaReact,
-} from "react-icons/fa";
+import { FaJs, FaNode, FaReact } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
