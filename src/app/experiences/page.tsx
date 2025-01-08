@@ -79,40 +79,51 @@ const ExperiencePage = () => {
 
   return (
     <div className="w-full">
-      <div className="w-full p-20 flex justify-center items-start h-screen bg-[url('/background.svg')] bg-cover">
+      <div className="w-full flex flex-col gap-10 justify-center items-center pb-20 lg:pb-0 md:pt-20 lg:pt-0 lg:h-screen bg-[url('/background.svg')] bg-cover">
+        <h2 className="text-4xl font-bold pb-10">
+          Mes expériences professionnelles
+        </h2>
         {professionals.map((experience: Professional, index: number) => {
           return (
-            <div className="w-1/2">
-              <h1 className="text-3xl font-bold pb-2">{experience.poste}</h1>
-              <h2 className="text-xl font-semibold pb-2">{experience.annee}</h2>
-              <p className="w-3/4 text-justify">{experience.detail}</p>
-              <img src={experience.logo} alt="logo" width={300} height={300} />
+            <div className="pb-20 sm:pb-0 w-4/5 flex flex-col sm:flex-row justify-center">
+              <div className="sm:w-1/4 pr-3">
+                <h3 className="text-xl font-semibold pb-2">
+                  {experience.annee}
+                </h3>
+              </div>
+              <div className="sm:w-3/4 flex flex-col border-l-4 border-slate-500 pl-12">
+                <h2 className="text-3xl font-bold pb-2">{experience.poste}</h2>
+                <p className="text-justify">{experience.detail}</p>
+              </div>
             </div>
           );
         })}
       </div>
-      <div className="w-full ptf-data flex flex-wrap gap-3 p-11">
-        {projects.map((projet: Project, index: number) => {
-          return (
-            <Card className="w-1/3" key={index}>
-              <CardHeader
-                className="flex justify-center items-center overflow-hidden"
-                style={{ height: "300px" }}
-              >
-                <img
-                  src={projet?.image}
-                  alt={""}
-                  width={"100%"}
-                  height={"100%"}
-                />
-              </CardHeader>
-              <CardContent>
-                <h3 className="text-lg font-semibold py-3">{projet.title}</h3>
-                <p>{projet.description}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="w-full flex flex-col items-center ptf-data">
+        <h2 className="text-4xl font-bold py-10">Mes réalisations</h2>
+        <div className="flex flex-wrap gap-3 p-11">
+          {projects.map((projet: Project, index: number) => {
+            return (
+              <Card className="w-full sm:w-1/4 md:w-1/2 lg:w-1/3" key={index}>
+                <CardHeader
+                  className="flex justify-center items-center overflow-hidden"
+                  style={{ height: "300px" }}
+                >
+                  <img
+                    src={projet?.image}
+                    alt={""}
+                    width={"100%"}
+                    height={"100%"}
+                  />
+                </CardHeader>
+                <CardContent>
+                  <h3 className="text-lg font-semibold py-3">{projet.title}</h3>
+                  <p>{projet.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
