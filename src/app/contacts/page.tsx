@@ -46,11 +46,9 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="flex flex-wrap p-2">
-      <div className="w-screen flex justify-center">
-        <h2 className="text-white font-bold py-5 text-2xl">Contact</h2>
-      </div>
-      <div className="w-screen md:w-1/2 px-12">
+    <div className="flex flex-wrap justify-center items-center p-2 bg-[url('/background.svg')] bg-cover sm:h-screen">
+      <div className="w-full pb-10 sm:pb-0 md:w-1/2 px-12">
+        <h2 className="font-bold pt-5 text-3xl">Contacter moi</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <CustomForm
