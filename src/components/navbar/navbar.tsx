@@ -37,8 +37,11 @@ const NavbarComponent = () => {
   ];
 
   return (
-    <div className="flex justify-between w-full p-3 fixed z-10 bg-transparent px-32 py-10" style={{background}}>
-      <div></div>
+    <div
+      className="flex items-center justify-between w-full p-3 fixed z-10 bg-transparent px-32 py-10"
+      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+    >
+      <h1 className="text-3xl text-white">Portfolio</h1>
       <NavigationMenu>
         <NavigationMenuList className="flex gap-8">
           {menu.map((item: Link, index: number) => {

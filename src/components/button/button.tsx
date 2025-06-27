@@ -12,7 +12,7 @@ export const ButtonComponent = ({
 }) => {
   return (
     <Button
-      className={`bg-white text-black font-bold px-4 py-2 rounded-full hover:bg-gray-700 hover:text-white ${className}`}
+      className={`bg-white text-black text-lg font-bold p-7 rounded-full hover:bg-gray-700 hover:text-white ${className}`}
       onClick={func}
     >
       {children}

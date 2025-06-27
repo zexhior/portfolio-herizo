@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { FaAngular, FaNode, FaReact } from "react-icons/fa";
 import { DiDjango } from "react-icons/di";
+import { BiLogoMongodb, BiLogoPostgresql } from "react-icons/bi";
 import { ButtonComponent } from "@/components/button/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -32,9 +33,11 @@ const Home = () => {
 
   return (
     <div className="w-full" ref={container}>
-      <div className="pt-24 lg:pt-0 flex flex-col w-full justify-center lg:h-screen items-center bg-slate-950 text-white px-32">
-        <h1 className="text-6xl font-bold py-4 last_name">Bienvenue à vous!</h1>
-        <h2 className="text-3xl font-semibold text-gray-600 first_name p-0 m-0">
+      <div className="lg:pt-0 flex flex-col w-full justify-center text-center h-screen items-center bg-slate-950 text-white px-5 lg:px-32">
+        <h1 className="text-3xl lg:text-6xl font-bold py-4 last_name">
+          Bienvenue à vous!
+        </h1>
+        <h2 className="text-lg lg:text-3xl font-semibold text-gray-600">
           Je m'appelle Herizo et je suis un développeur web Fullstack
         </h2>
         <div className="flex gap-4 mt-4">
@@ -48,30 +51,24 @@ const Home = () => {
         </div>
       </div>
       <SkillsComponent />
+      <FormationsComponent />
+      <ExperiencesComponent />
     </div>
   );
 };
 
 export default Home;
 
+interface ISkills {
+  index: string;
+  icon: React.ReactNode;
+  techno: string;
+  description: string;
+  sections: string[];
+}
+
 const SkillsComponent = () => {
-  const skills = [
-    {
-      index: "1-react",
-      icon: <FaReact className="text-6xl text-blue-400" />,
-      techno: "React",
-      description:
-        "Création d’interfaces web réactives avec React.js. Bonne maîtrise des hooks, du routing, des appels API, et de la gestion d’état via Context API ou Redux. Capacité à créer des composants réutilisables, à structurer des projets scalables et à intégrer des bibliothèques tierces (UI kits, charting, date pickers…). J’adopte les bonnes pratiques de performance, d’accessibilité et d’optimisation du code.",
-      sections: [
-        "React Router",
-        "Axios",
-        "ReduxToolkit / Context API",
-        "TailwindCSS / Sass",
-        "ShadCN",
-        "Vite / Next.js",
-        "Jest / Testing Library",
-      ],
-    },
+  const skillsFrontEnd: ISkills[] = [
     {
       index: "2-angular",
       icon: <FaAngular className="text-6xl text-red-600" />,
@@ -89,6 +86,25 @@ const SkillsComponent = () => {
         "HttpClient",
       ],
     },
+    {
+      index: "1-react",
+      icon: <FaReact className="text-6xl text-blue-400" />,
+      techno: "React",
+      description:
+        "Création d’interfaces web réactives avec React.js. Bonne maîtrise des hooks, du routing, des appels API, et de la gestion d’état via Context API ou Redux. Capacité à créer des composants réutilisables, à structurer des projets scalables et à intégrer des bibliothèques tierces (UI kits, charting, date pickers…). J’adopte les bonnes pratiques de performance, d’accessibilité et d’optimisation du code.",
+      sections: [
+        "React Router",
+        "Axios",
+        "ReduxToolkit / Context API",
+        "TailwindCSS / Sass",
+        "ShadCN",
+        "Vite / Next.js",
+        "Jest / Testing Library",
+      ],
+    },
+  ];
+
+  const skillsBackEnd: ISkills[] = [
     {
       index: "3-django",
       icon: <DiDjango size={100} className=" text-black" />,
@@ -130,43 +146,335 @@ const SkillsComponent = () => {
       ],
     },
   ];
-  return (
-    <div
-      className="px-32 py-16 bg-gray-900 text-white"
-      style={{ boxSizing: "content-box" }}
-    >
-      <h2 className="text-2xl font-bold">
-        Les différents Techno que je maitrîse
-      </h2>
-      <div className="flex w-full my-16">
-        <div className="w-1/2">test</div>
-        <div className="w-1/2 flex flex-col">
-          {skills.map((skill, index) => {
+
+  const skillsBD: ISkills[] = [
+    {
+      index: "3-postgreSQL",
+      icon: <BiLogoPostgresql size={100} className=" text-blue-900" />,
+      techno: "PostgreSQL",
+      description:
+        "Développement de serveurs back-end performants avec Node.js et Express. Je conçois des APIs RESTful sécurisées, documentées et faciles à maintenir. Utilisation de middlewares personnalisés, de JWT pour l’authentification, et d’ORMs comme Mongoose ou Sequelize selon la base de données utilisée. Je structure mes projets pour une scalabilité optimale et je suis à l’aise avec le déploiement sur des plateformes cloud.",
+      sections: [
+        "Modélisation relationnelle",
+        "Requêtes SQL complexes",
+        "Fonctions personnalisées",
+        "Index",
+        "vues matérialisées",
+        "triggers",
+        "Transactions",
+        "contraintes",
+        "Sauvegardes et restauration",
+        "pgAdmin",
+        "psql",
+        "ORM",
+        "Django ORM",
+        "Prisma…",
+        "Sécurité et gestion des rôles",
+      ],
+    },
+    {
+      index: "3-mongodb",
+      icon: <BiLogoMongodb size={100} className=" text-green-400" />,
+      techno: "MongoDB",
+      description:
+        "Utilisation de MongoDB pour la gestion de données NoSQL dans des applications modernes. Conception de collections optimisées, requêtes complexes avec l’Aggregation Pipeline, gestion des relations via références ou imbrications. Intégration avec Node.js et Express à l’aide de Mongoose pour structurer et valider les données. Capacité à assurer la performance, la sécurité et la scalabilité des bases MongoDB.",
+      sections: [
+        "Modélisation NoSQL",
+        "Mongoose",
+        "CRUD",
+        "Aggregation Pipeline",
+        "Indexation",
+        "Relations ObjectId",
+        "Gestion des validations, middleware Mongoose",
+        "Sanitisation",
+        "rate limiting",
+        "JWT",
+        "Sauvegarde/restauration",
+        "MongoDB Compass",
+        "Atlas",
+      ],
+    },
+  ];
+
+  const SkillSection = ({ skill }: { skill: ISkills }) => {
+    return (
+      <div
+        key={`${skill.index}`}
+        className="flex flex-col items-center lg:items-start w-full md:w-1/2 pb-8 px-8"
+      >
+        {skill.icon}
+        <h3 className="text-2xl my-4">{skill.techno}</h3>
+        <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+          {skill?.sections?.map((section, index) => {
             return (
-              <div
-                key={`${skill.index}`}
-                className={`w-full flex flex-col ${
-                  index < skills?.length - 1 ? "mb-16" : ""
-                }`}
+              <Badge
+                className="cursor-pointer"
+                variant={"secondary"}
+                key={`${skill.index}-${index}`}
               >
-                {skill.icon}
-                <h3 className="text-2xl my-4">{skill.techno}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skill?.sections?.map((section, index) => {
-                    return (
-                      <Badge
-                        variant={"secondary"}
-                        key={`${skill.index}-${index}`}
-                      >
-                        {section}
-                      </Badge>
-                    );
-                  })}
-                </div>
-              </div>
+                {section}
+              </Badge>
             );
           })}
         </div>
+      </div>
+    );
+  };
+
+  return (
+    <div
+      className="px-5 lg:px-32 py-16 bg-gray-900 text-white"
+      style={{ boxSizing: "content-box" }}
+    >
+      <h2 className="text-4xl font-bold">
+        Les différentes technologies maîtrisées
+      </h2>
+      <div className="flex w-full my-16">
+        <div className="hidden lg:inline lg:w-1/3">test</div>
+        <div className="w-full lg:w-2/3 border-l-2 border-gray-500 p-8">
+          <div className="pb-8">
+            <div className="flex items-center gap-2 pb-8">
+              <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
+                1
+              </div>
+              <h4 className="text-4xl font-bold">Front-end</h4>
+            </div>
+            <hr className="pb-8 border-gray-500" />
+            <div className="flex flex-wrap w-full">
+              {skillsFrontEnd.map((skill) => {
+                return <SkillSection skill={skill} key={skill.index} />;
+              })}
+            </div>
+          </div>
+          <div className="pb-8">
+            <div className="flex items-center gap-2 pb-8">
+              <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
+                2
+              </div>
+              <h4 className="text-4xl font-bold">Back-end</h4>
+            </div>
+            <hr className="pb-8 border-gray-500" />
+            <div className="flex flex-wrap w-full">
+              {skillsBackEnd.map((skill) => {
+                return <SkillSection skill={skill} key={skill.index} />;
+              })}
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center gap-2 pb-8">
+              <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
+                3
+              </div>
+              <h4 className="text-4xl font-bold">Base de données</h4>
+            </div>
+            <hr className="pb-8 border-gray-500" />
+            <div className="flex flex-wrap w-full">
+              {skillsBD.map((skill) => {
+                return <SkillSection skill={skill} key={skill.index} />;
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface IFormations {
+  degree: string;
+  institut: string;
+  description: string;
+  years: string;
+}
+
+interface IFormationSection {
+  formation: IFormations;
+  index: number;
+}
+
+const FormationSection: React.FC<IFormationSection> = ({
+  formation,
+  index,
+}) => {
+  return (
+    <div className={`flex flex-col w-1/2`}>
+      <h3 className="text-2xl font-bold">{formation.degree}</h3>
+      <h4 className="text-md text-gray-500">{formation.institut}</h4>
+      <h6 className="text-md text-gray-500 mb-8">{formation.years}</h6>
+      <p className="text-2xl">{formation.description}</p>
+    </div>
+  );
+};
+
+const FormationsComponent = () => {
+  const formations: IFormations[] = [
+    {
+      degree: "Diplôme Licence",
+      institut: "Institut Supérieur Polytechnique de Madagascar",
+      description:
+        "Obtention de du diplôme de licence en informatique de gestion, génie logiciel et intelligence artificielle",
+      years: "2017-2020",
+    },
+    {
+      degree: "Diplôme Master",
+      institut: "Institut Supérieur Polytechnique de Madagascar",
+      description:
+        "Obtention de du diplôme de master en informatique de gestion, génie logiciel et intelligence artificielle",
+      years: "2020-2023",
+    },
+  ];
+
+  return (
+    <div className="w-full px-36 py-16">
+      <h2 className="text-4xl font-bold pb-16">Formations</h2>
+      {formations?.map((formation, index) => {
+        return (
+          <div
+            className={`w-full flex pb-16 ${
+              index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+            }`}
+            key={index}
+          >
+            <div className="w-1/2">test</div>
+            <FormationSection formation={formation} index={index} />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+interface IExperiences {
+  logo: string;
+  society: string;
+  post: string;
+  years: string;
+  description: string;
+  techno: string[];
+}
+
+const ExperiencesComponent = () => {
+  const experiences: IExperiences[] = [
+    {
+      logo: "",
+      society: "Haikintana Association",
+      post: "Staigiaire développeur web Fullstack",
+      years: "Avril 2021 - Octobre 2021",
+      description:
+        "Création d'une application web pour la gestion des différents membres de l'association ainsi que les différents événements organisés par l'assocation. Pour gérer la présence ainsi que l'identification des différents membres, on a implementé une fonctionnalité qui permet de génerer le badge avec son QRCode d'identification qui pourra être scanné par l'administrateur pour le pointage lors des évènements.",
+      techno: [
+        "Angular",
+        "Rxjs",
+        "AuthGuard",
+        "JWT",
+        "Django",
+        "DRF",
+        "MariaDB",
+        "Filezila",
+        "Git",
+        "GitHub",
+        "Heroku",
+        "Slack",
+      ],
+    },
+    {
+      logo: "",
+      society: "Vatilab",
+      post: "Stagiaire développeur web Front-end",
+      years: "Février 2024 - Juillet 2024",
+      description:
+        "Maintenance de l'application web et mobile MyBeeDoo, ainsi que l'implementation des nouvelles fonctionnalités comme l'implémentation d'un messagarie, l'achat de produit, le paiement par messagerie et le refont de toute l'application en suivant le design fourni par les designers en respectant le design UX/UI pour donner une bonne expérience aux utilisateurs lors de l'utilisation de l'application.",
+      techno: [
+        "React",
+        "Redux",
+        "Stripe",
+        "OAuth",
+        "PayPal API",
+        "Git",
+        "Gitlab",
+        "Cypress",
+        "Filezila",
+        "Trello",
+        "Méthode Agile",
+        "AdobeXD",
+      ],
+    },
+
+    {
+      logo: "",
+      society: "Vatilab",
+      post: "Développeur web Front-end",
+      years: "Juillet 2024 - Février 2025",
+      description:
+        "Implémentation des nouveaux projets web et mobile sur le côté front-end en suivant les maquettes fournis par les designers en respectant le design UX/UI ainsi que la maintenance des projets existants comme le debugage des bugs en production ou pour des mises à jours des applications existants tout en étant en collaboration avec l'équipe du back-end pour la documentation des appels API rattaché aux projets.",
+      techno: [
+        "Angular",
+        "Rxjs",
+        "React",
+        "Redux",
+        "Stripe",
+        "OAuth",
+        "PayPal API",
+        "Git",
+        "Gitlab",
+        "Cypress",
+        "Filezila",
+        "Trello",
+        "Méthode Agile",
+        "AdobeXD",
+        "Figma",
+        "Flutter",
+        "GoogleMapAPI",
+        "Strapi",
+        "MariaDB",
+      ],
+    },
+  ];
+
+  const ExperienceSection: React.FC<{
+    experience: IExperiences;
+    index: number;
+    total: number;
+  }> = ({ experience, index, total }) => {
+    return (
+      <div
+        className={`flex flex-col w-1/3 text-justify ${
+          index < total - 1 ? "pe-8" : ""
+        }`}
+      >
+        <h3 className="text-3xl">{experience.society}</h3>
+        <h4 className="text-md text-gray-500">Poste : {experience.post}</h4>
+        <h5 className="text-md text-gray-500 pb-8">{experience.years}</h5>
+        <p className="pb-8 flex-auto">{experience.description}</p>
+        <div className="flex flex-wrap gap-2 flex-1">
+          {experience.techno.map((section, index) => {
+            return (
+              <Badge variant={"secondary"} key={`${index}-${section}`}>
+                {section}
+              </Badge>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="w-full px-36 py-16 bg-gray-800 text-white">
+      <h2 className="text-4xl font-bold text-center pb-16">
+        Experiences professionnelles
+      </h2>
+      <div className="flex flex-wrap w-full pb-8">
+        {experiences?.map((experience: IExperiences, index) => {
+          return (
+            <ExperienceSection
+              experience={experience}
+              index={index}
+              total={experiences.length}
+              key={index}
+            />
+          );
+        })}
       </div>
     </div>
   );
