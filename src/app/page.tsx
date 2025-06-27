@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { FaAngular, FaNode, FaReact } from "react-icons/fa";
@@ -7,43 +7,75 @@ import { DiDjango } from "react-icons/di";
 import { BiLogoMongodb, BiLogoPostgresql } from "react-icons/bi";
 import { ButtonComponent } from "@/components/button/button";
 import { Badge } from "@/components/ui/badge";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from "next/image";
 
 const Home = () => {
   gsap.registerPlugin(useGSAP);
 
   const container = useRef(null);
+  const [index, setIndex] = useState(0);
+  const textMain = ["Bienvenue à vous!", "Développeur Web & Mobile", "Développeur Fullstack"];
+  const subText = ["Je m'appelle Herizo et je suis un développeur", "Je développe des applications web et mobiles dans le monde de la technologie", "Je suis passionné par la programmation et la technologie"];
 
-  // useGSAP(
-  //   () => {
-  //     gsap.fromTo(
-  //       ".profile",
-  //       { scale: 0, transformOrigin: "center 40%", duration: 1 },
-  //       { scale: 1, duration: 1 }
-  //     );
-  //     gsap.from(".last_name", { x: -1000, duration: 2 });
-  //     gsap.from(".first_name", { x: -1000, duration: 2, delay: 1 });
-  //     gsap.fromTo(
-  //       ".detail",
-  //       { opacity: 0, duration: 4, delay: 3 },
-  //       { opacity: 1, duraction: 4, delay: 3 }
-  //     );
-  //   },
-  //   { scope: container }
-  // );
+  useEffect(() => {
+    gsap.fromTo(
+      `.profile-${index}`,
+      { y: 100, duration: 0.5, delay: 0, animationTimingFunction: "ease-out" },
+      { y: 0, duration: 0.5, delay: 0, animationTimingFunction: "ease-out" }
+    );
+
+    gsap.fromTo(
+      `.subprofile-${index}`,
+      { y: 100, duration: 0.5, delay: 0, animationTimingFunction: "ease-in-out" },
+      { y: 0, duration: 0.5, delay: 0, animationTimingFunction: "ease-in-out" }
+    );
+
+
+    gsap.fromTo(
+      `.subprofile-${index}`,
+      { y: 0, duration: 0.5, delay: 5, animationTimingFunction: "ease-in-out" },
+      { y: 100, duration: 0.5, delay: 5, animationTimingFunction: "ease-in-out" }
+    );
+    gsap.fromTo(
+      `.profile-${index}`,
+      { y: 0, duration: 0.5, delay: 5, animationTimingFunction: "ease-in-out" },
+      { y: 100, duration: 0.5, delay: 5, animationTimingFunction: "ease-in-out" }
+    );
+    const time = setTimeout(() => {
+      let iteration = index + 1;
+      if (iteration >= textMain.length) {
+        iteration = 0;
+      }
+      setIndex(iteration);
+    }, 6000);
+    return () => clearTimeout(time);
+  }, [index]);
 
   return (
-    <div className="w-full" ref={container}>
-      <div className="lg:pt-0 flex flex-col w-full justify-center text-center h-screen items-center bg-slate-950 text-white px-5 lg:px-32">
-        <h1 className="text-3xl lg:text-6xl font-bold py-4 last_name">
-          Bienvenue à vous!
-        </h1>
-        <h2 className="text-lg lg:text-3xl font-semibold text-gray-600">
-          Je m'appelle Herizo et je suis un développeur web Fullstack
-        </h2>
+    <div className="main w-full" ref={container}>
+      <div className="lg:pt-0 flex flex-col w-full justify-center text-center h-screen items-center bg-slate-950 text-white px-5 lg:px-32 bg-[url('/background.png')] bg-cover">
+        <div className="relative w-full h-24 text-center overflow-hidden">
+          {
+            textMain.map((text, index) => {
+              return <h1 className={`w-full text-3xl lg:text-6xl font-bold py-4 profile-${index} overflow-hidden absolute`} key={`text-${index}`} style={{ right: 0, top: 0, transform: "translateY(150px)" }}>
+                {text}
+              </h1>
+            })
+          }
+
+        </div>
+        <div className="relative w-full h-20 text-center overflow-hidden">{
+          subText.map((text, index) => {
+            return <h2 className={`w-full text-lg lg:text-3xl font-semibold subprofile-${index} overflow-hidden absolute`} key={`subtext-${index}`} style={{ right: 0, top: 0, transform: "translateY(100px)" }}>
+              {text}
+            </h2>
+          })
+        }</div>
         <div className="flex gap-4 mt-4">
-          <ButtonComponent func={(e) => {}}>Commencer</ButtonComponent>
+          <ButtonComponent func={(e) => { }}>Commencer</ButtonComponent>
           <ButtonComponent
-            func={(e) => {}}
+            func={(e) => { }}
             className="bg-gray-700 text-white hover:bg-gray-900 "
           >
             Obtenir CV
@@ -68,6 +100,55 @@ interface ISkills {
 }
 
 const SkillsComponent = () => {
+  const container = useRef<HTMLDivElement>(null);
+  useGSAP(() => {
+    if (container?.current) {
+      gsap.registerPlugin(ScrollTrigger)
+      const frontend = container?.current?.querySelector(".front-end")
+      const backend = container?.current?.querySelector(".back-end")
+      const bd = container?.current?.querySelector(".bd")
+      const width = container?.current?.getBoundingClientRect().width
+      gsap.set('.front-end', { x: width })
+      gsap.set('.back-end', { x: width })
+      gsap.set('.bd', { x: width })
+
+      const tlFrontEnd = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".front-end",
+          start: "-100%",
+        }
+      })
+      const tlBackEnd = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".back-end",
+          start: "-100%",
+        }
+      })
+      const tlBD = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".bd",
+          start: "-100%",
+        }
+      })
+      tlFrontEnd.to(".front-end", {
+        x: 0, duration: 0.75,
+        animationTimingFunction: "ease-in-out",
+      });
+      tlBackEnd.to(".back-end", {
+        x: 0, duration: 0.75,
+        animationTimingFunction: "ease-in-out",
+      });
+      tlBD.to(".bd", {
+        x: 0, duration: 0.75,
+        animationTimingFunction: "ease-in-out",
+      });
+    }
+  }, { scope: container })
+
+  useEffect(() => {
+
+  }, [])
+
   const skillsFrontEnd: ISkills[] = [
     {
       index: "2-angular",
@@ -78,9 +159,9 @@ const SkillsComponent = () => {
       sections: [
         "Angular CLI",
         "Modules & Lazy loading",
-        "Composants, Directives, Pipes personnalisés",
-        "Formulaires réactifs et Template-driven forms",
-        "Services & Dependency Injection",
+        "Composants", "Directives", "Pipes personnalisés",
+        "Formulaires réactifs", "Template-driven forms",
+        "Services", "Dependency Injection",
         "Routing avancé",
         "RxJS",
         "HttpClient",
@@ -185,7 +266,9 @@ const SkillsComponent = () => {
         "Aggregation Pipeline",
         "Indexation",
         "Relations ObjectId",
-        "Gestion des validations, middleware Mongoose",
+        "Gestion des validations",
+        "middleware",
+        "Mongoose",
         "Sanitisation",
         "rate limiting",
         "JWT",
@@ -199,6 +282,7 @@ const SkillsComponent = () => {
   const SkillSection = ({ skill }: { skill: ISkills }) => {
     return (
       <div
+        id="skills"
         key={`${skill.index}`}
         className="flex flex-col items-center lg:items-start w-full md:w-1/2 pb-8 px-8"
       >
@@ -223,16 +307,19 @@ const SkillsComponent = () => {
 
   return (
     <div
-      className="px-5 lg:px-32 py-16 bg-gray-900 text-white"
+      className="skills px-5 lg:px-32 py-16 bg-gray-900 text-white"
       style={{ boxSizing: "content-box" }}
+      ref={container}
     >
       <h2 className="text-4xl font-bold">
         Les différentes technologies maîtrisées
       </h2>
       <div className="flex w-full my-16">
-        <div className="hidden lg:inline lg:w-1/3">test</div>
+        <div className="hidden lg:inline lg:w-1/3">
+          <Image className="sticky top-52 left-0" src={"/frontend.png"} alt="skills" width={400} height={400} />
+        </div>
         <div className="w-full lg:w-2/3 border-l-2 border-gray-500 p-8">
-          <div className="pb-8">
+          <div className="front-end pb-8">
             <div className="flex items-center gap-2 pb-8">
               <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
                 1
@@ -246,7 +333,7 @@ const SkillsComponent = () => {
               })}
             </div>
           </div>
-          <div className="pb-8">
+          <div className="back-end pb-8">
             <div className="flex items-center gap-2 pb-8">
               <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
                 2
@@ -260,7 +347,7 @@ const SkillsComponent = () => {
               })}
             </div>
           </div>
-          <div>
+          <div className="bd">
             <div className="flex items-center gap-2 pb-8">
               <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
                 3
@@ -330,9 +417,8 @@ const FormationsComponent = () => {
       {formations?.map((formation, index) => {
         return (
           <div
-            className={`w-full flex pb-16 ${
-              index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-            }`}
+            className={`w-full flex pb-16 ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+              }`}
             key={index}
           >
             <div className="w-1/2">test</div>
@@ -438,9 +524,8 @@ const ExperiencesComponent = () => {
   }> = ({ experience, index, total }) => {
     return (
       <div
-        className={`flex flex-col w-1/3 text-justify ${
-          index < total - 1 ? "pe-8" : ""
-        }`}
+        className={`flex flex-col w-1/3 text-justify ${index < total - 1 ? "pe-8" : ""
+          }`}
       >
         <h3 className="text-3xl">{experience.society}</h3>
         <h4 className="text-md text-gray-500">Poste : {experience.post}</h4>
