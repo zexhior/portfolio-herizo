@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { FaAngular, FaNode, FaReact } from "react-icons/fa";
@@ -9,6 +9,7 @@ import { ButtonComponent } from "@/components/button/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from "next/image";
+import exp from "constants";
 
 const Home = () => {
   gsap.registerPlugin(useGSAP);
@@ -429,6 +430,7 @@ const SkillsComponent = () => {
 };
 
 interface IFormations {
+  image?: React.ReactNode;
   degree: string;
   institut: string;
   description: string;
@@ -445,7 +447,7 @@ const FormationSection: React.FC<IFormationSection> = ({
   index,
 }) => {
   return (
-    <div className={`flex flex-col w-1/2`}>
+    <div className={`flex flex-col w-1/2 py-16`}>
       <h3 className="text-2xl font-bold">{formation.degree}</h3>
       <h4 className="text-md text-gray-500">{formation.institut}</h4>
       <h6 className="text-md text-gray-500 mb-8">{formation.years}</h6>
@@ -457,6 +459,7 @@ const FormationSection: React.FC<IFormationSection> = ({
 const FormationsComponent = () => {
   const formations: IFormations[] = [
     {
+      image: <Image src={"/irisoa.png"} alt="ispm" fill style={{ objectFit: "contain" }} />,
       degree: "Diplôme Licence",
       institut: "Institut Supérieur Polytechnique de Madagascar",
       description:
@@ -464,6 +467,7 @@ const FormationsComponent = () => {
       years: "2017-2020",
     },
     {
+      image: <Image src={"/ISPMBatiment.png"} alt="ispm" fill style={{ objectFit: "contain" }} />,
       degree: "Diplôme Master",
       institut: "Institut Supérieur Polytechnique de Madagascar",
       description:
@@ -482,7 +486,8 @@ const FormationsComponent = () => {
               }`}
             key={index}
           >
-            <div className="w-1/2">
+            <div className="flex w-1/2 relative">
+              {formation.image ? formation.image : ""}
             </div>
             <FormationSection formation={formation} index={index} />
           </div>
@@ -493,7 +498,7 @@ const FormationsComponent = () => {
 };
 
 interface IExperiences {
-  logo: string;
+  logo: React.ReactNode;
   society: string;
   post: string;
   years: string;
@@ -504,7 +509,7 @@ interface IExperiences {
 const ExperiencesComponent = () => {
   const experiences: IExperiences[] = [
     {
-      logo: "",
+      logo: <Image src={"/logo/haikintana.jpg"} alt="haikintana" fill style={{ objectFit: "contain" }} />,
       society: "Haikintana Association",
       post: "Staigiaire développeur web Fullstack",
       years: "Avril 2021 - Octobre 2021",
@@ -526,7 +531,7 @@ const ExperiencesComponent = () => {
       ],
     },
     {
-      logo: "",
+      logo: <Image className="relative" src={"/logo/vatilab.jpg"} alt="vatilab" fill style={{ objectFit: "contain" }} />,
       society: "Vatilab",
       post: "Stagiaire développeur web Front-end",
       years: "Février 2024 - Juillet 2024",
@@ -549,7 +554,7 @@ const ExperiencesComponent = () => {
     },
 
     {
-      logo: "",
+      logo: <Image className="relative" src={"/logo/vatilab.jpg"} alt="vatilab" fill style={{ objectFit: "contain" }} />,
       society: "Vatilab",
       post: "Développeur web Front-end",
       years: "Juillet 2024 - Février 2025",
@@ -586,12 +591,13 @@ const ExperiencesComponent = () => {
   }> = ({ experience, index, total }) => {
     return (
       <div
-        className={`flex flex-col w-1/3 text-justify ${index < total - 1 ? "pe-8" : ""
+        className={`relative flex flex-col w-1/3 text-justify ${index < total - 1 ? "pe-8" : ""
           }`}
       >
+        <div className="flex items-center justify-center relative w-full h-32 my-8">{experience?.logo}</div>
         <h3 className="text-3xl">{experience.society}</h3>
         <h4 className="text-md text-gray-500">Poste : {experience.post}</h4>
-        <h5 className="text-md text-gray-500 pb-8">{experience.years}</h5>
+        <h5 className="text-md text-black pb-8">{experience.years}</h5>
         <p className="pb-8 flex-auto">{experience.description}</p>
         <div className="flex flex-wrap gap-2 flex-1">
           {experience.techno.map((section, index) => {
