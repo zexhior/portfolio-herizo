@@ -9,7 +9,6 @@ import { ButtonComponent } from "@/components/button/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from "next/image";
-import exp from "constants";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
@@ -80,7 +79,9 @@ const Home = () => {
             func={(e) => { }}
             className="bg-gray-700 text-white hover:bg-gray-900 "
           >
-            Obtenir CV
+            <a href="/CV/CV RASOLONJATOVO Brice Herizo.pdf" download="CV RASOLONJATOVO Brice Herizo.pdf">
+              Obtenir CV
+            </a>
           </ButtonComponent>
         </div>
       </div>
@@ -603,8 +604,8 @@ const ExperiencesComponent = () => {
         <h3 className="text-3xl">{experience.society}</h3>
         <h4 className="text-md text-gray-500">Poste : {experience.post}</h4>
         <h5 className="text-md pb-8">{experience.years}</h5>
-        <p className="pb-8 flex-auto">{experience.description}</p>
-        <div className="flex flex-wrap gap-2 flex-1">
+        <p className="pb-8">{experience.description}</p>
+        <div className="flex flex-wrap gap-2">
           {experience.techno.map((section, index) => {
             return (
               <Badge variant={"secondary"} key={`${index}-${section}`}>
@@ -654,7 +655,7 @@ const ProjectsComponent = () => {
     {
       logo: null,
       title: "SmartLibrary",
-      description: "Projet application de gestion de livre et des auteurs de livre pour les amateurs de lecture. Projet academique réalisé en groupe de 4 personnes en 3 mois.",
+      description: "Projet application web academique de gestion de livre et des auteurs de livre pour les amateurs de lecture.",
       techno: ["React", "reduxtoolkit", "JWT", "Sass", "Flutter", "Node/Express", "MongoDB", "Mongoose", "Git", "GitHub", "Render"],
       link: "https://smartlibrary-bo.onrender.com",
       screenShots: ["/mockup/smartlibrary1.png", "/mockup/smartlibrary2.png", "/mockup/smartlibrary3.png"],
@@ -662,7 +663,7 @@ const ProjectsComponent = () => {
     {
       logo: null,
       title: "MyBeeDoo",
-      description: "Application réseau social et markteplace pour vendre des produits ou publier des annonces avec des fonctionnalités de chat et de paiement. Application sous la propriété de la société Vatilab.                                                                                                   ",
+      description: "Application réseau social et markteplace de Vatilab pour vendre des produits ou publier des annonces avec des fonctionnalités de chat et de paiement.",
       techno: ["React", "redux", "Stripe", "JWT", "react-oauth", "react-facebook-auth", "react-apple-signin-auth", "Paypal", "Socket.io", "Bootstrap", "Git", "GitLab", "Trello"],
       link: "https://mybeedoo.com/",
       screenShots: ["/mockup/mybeedoo1.png", "/mockup/mybeedoo2.png", "/mockup/mybeedoo3.png"]
@@ -701,39 +702,29 @@ const ProjectsComponent = () => {
 
   return <div id="projects" className="px-5 lg:px-32 py-16" ref={containerRef}>
     <h3 className="text-4xl font-bold">Mes projets</h3>
-    <div className="flex flex-col md:flex-row md:flex-wrap w-full py-16 box-content">
+    <div className="w-full flex flex-col md:flex-row md:flex-wrap md:justify-between py-16 box-content" style={{ boxSizing: "border-box" }}>
       {
         projets.map((projet, index) => {
-          return <div className="projet w-full md:w-1/2 lg:w-1/3 mb-4 md:mb-0 md:p-4 lg:p-8 border-content" key={index}>
-            <Card className="h-full flex flex-col gap-8  hover:bg-slate-300 relative overflow-hidden py-8">
-              <h4 className="text-2xl font-bold px-8">{projet.title}</h4>
-              <p className="flex-auto px-8">{projet.description}</p>
-              <div className="hidden md:flex md:flex-wrap gap-2 px-8">
-                {
-                  projet.techno.map((techno, index) => {
-                    return <Badge variant={"secondary"} key={index}>{techno}</Badge>
-                  })
-                }
-              </div>
-              <div className="h-full w-full top-0 flex flex-col start-center items-center absolute box-border opacity-0 hover:opacity-100" style={{ backgroundColor: "rgba(0,0,0,0.8)" }}>
-                <div className="h-auto lg:h-1/2 flex flex-col justify-center mb-8 relative w-full">
-                  <Carousel className="h-auto
-                   flex-auto aspect-widescreen w-full relative">
-                    <CarouselContent className="h-full aspect-widescreen w-full m-0 p-0">
-                      {
-                        projet.screenShots?.map((screenShot, index) => {
-                          return <CarouselItem key={`${index}-screenshot-${projet?.title}`} className="aspect-widescreen w-full relative h-48"><Image src={screenShot} alt={screenShot} fill style={{ objectFit: "contain" }} /></CarouselItem>
-                        })
-                      }
-                    </CarouselContent>
-                    <CarouselPrevious className="absolute z-10 left-5 top-1/2" />
-                    <CarouselNext className="absolute z-10 right-5 top-1/2" />
-                  </Carousel>
-                </div>
-                {projet?.link && <a className="btn bg-slate-500 hover:bg-slate-800 p-4 rounded-full text-white font-bold w-fit my-2" href={projet?.link}>Voir le site</a>}
-              </div>
-            </Card>
-          </div>
+          return <Card className="projet hover:bg-slate-300 relative overflow-hidden md:w-[calc(30.33%-0.5rem)]" key={index}>
+            <CardHeader className="projet-cardheader p-0 mb-4">
+              <Carousel className="relative">
+                <CarouselContent className="h-48 w-full m-0 p-0">
+                  {
+                    projet.screenShots?.map((screenShot, index) => {
+                      return <CarouselItem key={`${index}-screenshot-${projet?.title}`} className="relative bg-primary"><Image src={screenShot} alt={screenShot} fill style={{ objectFit: "contain" }} /></CarouselItem>
+                    })
+                  }
+                </CarouselContent>
+                <CarouselPrevious className="absolute z-10 left-5 top-1/2" />
+                <CarouselNext className="absolute z-10 right-5 top-1/2" />
+              </Carousel>
+            </CardHeader>
+            <CardContent className="flex flex-col items-start md:h-[calc(100%-12rem)]">
+              <h4 className="text-2xl font-bold mb-4">{projet.title}</h4>
+              <p className="flex-grow">{projet.description}</p>
+              {projet?.link ? <a className="bg-slate-500 hover:bg-slate-800 p-4 rounded-full text-white font-bold w-fit" href={projet?.link}>Voir le site</a> : <></>}
+            </CardContent>
+          </Card>
         })
       }
     </div>

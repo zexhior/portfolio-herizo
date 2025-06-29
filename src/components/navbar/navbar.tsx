@@ -40,7 +40,7 @@ const NavbarComponent = () => {
       link: "#projects",
     },
   ];
-  const idSection = ["skills", "formations", "experiences", "projects"];
+  const idSection = ["skills", "formations", "experiences", "projects", "footer"];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -57,7 +57,7 @@ const NavbarComponent = () => {
 
   const handlerScrollTo = (index: number) => {
     gsap.registerPlugin(ScrollToPlugin);
-    gsap.to(window, { duration: 0.5, scrollTo: { y: `#${idSection[index]}`, offsetY: 300 } });
+    gsap.to(window, { duration: 0.5, scrollTo: { y: `#${idSection[index]}`, offsetY: 100 } });
   }
 
   return (
@@ -84,7 +84,9 @@ const NavbarComponent = () => {
             );
           })}
           <NavigationMenuItem>
-            <ButtonComponent func={() => { }}>Contacter-moi</ButtonComponent>
+            <ButtonComponent func={() => { }}><p onClick={() => {
+              handlerScrollTo(menu.length);
+            }}>Contacter-moi</p></ButtonComponent>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
