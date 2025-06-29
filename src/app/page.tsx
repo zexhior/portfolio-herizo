@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from "next/image";
 import exp from "constants";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const Home = () => {
   gsap.registerPlugin(useGSAP);
@@ -74,7 +76,6 @@ const Home = () => {
           })
         }</div>
         <div className="flex gap-4 mt-4">
-          <ButtonComponent func={(e) => { }}>Commencer</ButtonComponent>
           <ButtonComponent
             func={(e) => { }}
             className="bg-gray-700 text-white hover:bg-gray-900 "
@@ -86,6 +87,7 @@ const Home = () => {
       <SkillsComponent />
       <FormationsComponent />
       <ExperiencesComponent />
+      <ProjectsComponent />
     </div>
   );
 };
@@ -238,11 +240,11 @@ const SkillsComponent = () => {
       <div
         id="skills"
         key={`${skill.index}`}
-        className="flex flex-col items-center lg:items-start w-full pb-8 px-8"
+        className="flex flex-col items-center lg:items-start w-full pb-8 lg:px-8"
       >
         {skill.icon}
         <h3 className="text-2xl my-4">{skill.techno}</h3>
-        <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+        <div className="hidden md:flex md:flex-wrap gap-2 justify-center md:justify-start">
           {skill?.sections?.map((section, index) => {
             return (
               <Badge
@@ -265,6 +267,8 @@ const SkillsComponent = () => {
 
   useGSAP(() => {
     if (container?.current) {
+      const height = container?.current?.clientHeight;
+      const start = "top center";
       gsap.registerPlugin(ScrollTrigger)
       const width = container?.current?.getBoundingClientRect().width
       gsap.set('.front-end', { x: width })
@@ -278,7 +282,7 @@ const SkillsComponent = () => {
       const tlFrontEnd = gsap.timeline({
         scrollTrigger: {
           trigger: ".front-end",
-          start: "top center",
+          start,
           end: "bottom center",
           toggleActions: "play reverse play reverse",
         }
@@ -286,7 +290,7 @@ const SkillsComponent = () => {
       const tlBackEnd = gsap.timeline({
         scrollTrigger: {
           trigger: ".back-end",
-          start: "top center",
+          start,
           end: "bottom center",
           toggleActions: "play reverse play reverse",
         }
@@ -294,7 +298,7 @@ const SkillsComponent = () => {
       const tlBD = gsap.timeline({
         scrollTrigger: {
           trigger: ".bd",
-          start: "top center",
+          start,
           end: "bottom center",
           toggleActions: "play reverse play reverse",
         }
@@ -365,7 +369,8 @@ const SkillsComponent = () => {
 
   return (
     <div
-      className="skills px-5 lg:px-32 py-16 bg-gray-900 text-white"
+      id="skills"
+      className="px-5 lg:px-32 py-16 bg-gray-900 text-white"
       style={{ boxSizing: "content-box" }}
       ref={container}
     >
@@ -373,15 +378,15 @@ const SkillsComponent = () => {
         Les différentes technologies maîtrisées
       </h2>
       <div className="flex w-full my-16">
-        <div className="hidden lg:flex flex-col items-center lg:w-1/2 relative">
+        <div className="hidden md:flex md:flex-col items-center md:w-1/2 relative">
           <div className="sticky w-full top-40 flex justify-center" style={{ height: imageSize }}>
             <Image className="absolute frontend-image" src={"/frontend.png"} alt="skills" width={imageSize} height={imageSize} />
             <Image className="absolute backend-image" src={"/backend.png"} alt="skills" width={imageSize} height={imageSize} />
             <Image className="absolute bd-image" src={"/bd.png"} alt="skills" width={imageSize} height={imageSize} />
           </div>
         </div>
-        <div className="w-full lg:w-1/2 border-l-2 border-gray-500 p-8">
-          <div className="front-end pb-8">
+        <div className="w-full md:w-1/2 border-l-2 border-gray-500 p-8">
+          <div className="front-end pb-4 lg:pb-8">
             <div className="flex items-center gap-2 pb-8">
               <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
                 1
@@ -395,7 +400,7 @@ const SkillsComponent = () => {
               })}
             </div>
           </div>
-          <div className="back-end pb-8">
+          <div className="back-end pb-4 lg:pb-8">
             <div className="flex items-center gap-2 pb-8">
               <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
                 2
@@ -447,7 +452,7 @@ const FormationSection: React.FC<IFormationSection> = ({
   index,
 }) => {
   return (
-    <div className={`flex flex-col w-1/2 py-16`}>
+    <div className={`flex flex-col w-full lg:w-1/2 py-16`}>
       <h3 className="text-2xl font-bold">{formation.degree}</h3>
       <h4 className="text-md text-gray-500">{formation.institut}</h4>
       <h6 className="text-md text-gray-500 mb-8">{formation.years}</h6>
@@ -477,16 +482,16 @@ const FormationsComponent = () => {
   ];
 
   return (
-    <div className="w-full px-36 py-16">
+    <div id="formations" className="w-full px-5 lg:px-32 py-16">
       <h2 className="text-4xl font-bold pb-16">Formations</h2>
       {formations?.map((formation, index) => {
         return (
           <div
-            className={`w-full flex pb-16 ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+            className={`w-full flex lg:pb-16 flex-col ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
               }`}
             key={index}
           >
-            <div className="flex w-1/2 relative">
+            <div className="flex h-80 w-ful lg:w-1/2 relative">
               {formation.image ? formation.image : ""}
             </div>
             <FormationSection formation={formation} index={index} />
@@ -509,7 +514,7 @@ interface IExperiences {
 const ExperiencesComponent = () => {
   const experiences: IExperiences[] = [
     {
-      logo: <Image src={"/logo/haikintana.jpg"} alt="haikintana" fill style={{ objectFit: "contain" }} />,
+      logo: <Image src={"/logo/haikintana.png"} alt="haikintana" fill style={{ objectFit: "contain" }} />,
       society: "Haikintana Association",
       post: "Staigiaire développeur web Fullstack",
       years: "Avril 2021 - Octobre 2021",
@@ -531,7 +536,7 @@ const ExperiencesComponent = () => {
       ],
     },
     {
-      logo: <Image className="relative" src={"/logo/vatilab.jpg"} alt="vatilab" fill style={{ objectFit: "contain" }} />,
+      logo: <Image className="relative" src={"/logo/vatilab.png"} alt="vatilab" fill style={{ objectFit: "contain" }} />,
       society: "Vatilab",
       post: "Stagiaire développeur web Front-end",
       years: "Février 2024 - Juillet 2024",
@@ -554,7 +559,7 @@ const ExperiencesComponent = () => {
     },
 
     {
-      logo: <Image className="relative" src={"/logo/vatilab.jpg"} alt="vatilab" fill style={{ objectFit: "contain" }} />,
+      logo: <Image className="relative" src={"/logo/vatilab.png"} alt="vatilab" fill style={{ objectFit: "contain" }} />,
       society: "Vatilab",
       post: "Développeur web Front-end",
       years: "Juillet 2024 - Février 2025",
@@ -591,13 +596,13 @@ const ExperiencesComponent = () => {
   }> = ({ experience, index, total }) => {
     return (
       <div
-        className={`relative flex flex-col w-1/3 text-justify ${index < total - 1 ? "pe-8" : ""
+        className={`relative flex flex-col w-full lg:w-1/3 text-justify ${index < total - 1 ? "lg:pe-8" : ""
           }`}
       >
         <div className="flex items-center justify-center relative w-full h-32 my-8">{experience?.logo}</div>
         <h3 className="text-3xl">{experience.society}</h3>
         <h4 className="text-md text-gray-500">Poste : {experience.post}</h4>
-        <h5 className="text-md text-black pb-8">{experience.years}</h5>
+        <h5 className="text-md pb-8">{experience.years}</h5>
         <p className="pb-8 flex-auto">{experience.description}</p>
         <div className="flex flex-wrap gap-2 flex-1">
           {experience.techno.map((section, index) => {
@@ -613,11 +618,11 @@ const ExperiencesComponent = () => {
   };
 
   return (
-    <div className="w-full px-36 py-16 bg-gray-800 text-white">
+    <div id="experiences" className="w-full px-5 lg:px-32 py-16 bg-gray-800 text-white">
       <h2 className="text-4xl font-bold text-center pb-16">
         Experiences professionnelles
       </h2>
-      <div className="flex flex-wrap w-full pb-8">
+      <div className="flex flex-col lg:flex-row lg:flex-wrap w-full pb-8">
         {experiences?.map((experience: IExperiences, index) => {
           return (
             <ExperienceSection
@@ -632,3 +637,105 @@ const ExperiencesComponent = () => {
     </div>
   );
 };
+
+interface IProjet {
+  logo: React.ReactNode | null;
+  title: string;
+  description: string;
+  techno: string[]
+  link?: string;
+  screenShots?: string[]
+}
+
+const ProjectsComponent = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const projets: IProjet[] = [
+    {
+      logo: null,
+      title: "SmartLibrary",
+      description: "Projet application de gestion de livre et des auteurs de livre pour les amateurs de lecture. Projet academique réalisé en groupe de 4 personnes en 3 mois.",
+      techno: ["React", "reduxtoolkit", "JWT", "Sass", "Flutter", "Node/Express", "MongoDB", "Mongoose", "Git", "GitHub", "Render"],
+      link: "https://smartlibrary-bo.onrender.com",
+      screenShots: ["/mockup/smartlibrary1.png", "/mockup/smartlibrary2.png", "/mockup/smartlibrary3.png"],
+    },
+    {
+      logo: null,
+      title: "MyBeeDoo",
+      description: "Application réseau social et markteplace pour vendre des produits ou publier des annonces avec des fonctionnalités de chat et de paiement. Application sous la propriété de la société Vatilab.                                                                                                   ",
+      techno: ["React", "redux", "Stripe", "JWT", "react-oauth", "react-facebook-auth", "react-apple-signin-auth", "Paypal", "Socket.io", "Bootstrap", "Git", "GitLab", "Trello"],
+      link: "https://mybeedoo.com/",
+      screenShots: ["/mockup/mybeedoo1.png", "/mockup/mybeedoo2.png", "/mockup/mybeedoo3.png"]
+    },
+    {
+      logo: null,
+      title: "Gestion hotel",
+      description: "Application web pour gérer les réservations et les clients d'un hôtel, ainsi que la gestion des chambres et des services.",
+      techno: ["React", "JWT", "Bootstrap", "Django", "PostgreSQL", "DRF", "Git", "GitLab", "Trello"],
+      screenShots: ["/mockup/hotelnambinina1.png", "/mockup/hotelnambinina2.png", "/mockup/hotelnambinina3.png"]
+    },
+  ]
+
+  useGSAP(() => {
+    gsap.set('.projet', {
+      opacity: 0,
+      y: 50,
+    },)
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top center",
+        toggleActions: "play reverse play reverse",
+      },
+    });
+    tl.to(
+      ".projet",
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+      }
+    );
+  }, { scope: containerRef })
+
+
+  return <div id="projects" className="px-5 lg:px-32 py-16" ref={containerRef}>
+    <h3 className="text-4xl font-bold">Mes projets</h3>
+    <div className="flex flex-col md:flex-row md:flex-wrap w-full py-16 box-content">
+      {
+        projets.map((projet, index) => {
+          return <div className="projet w-full md:w-1/2 lg:w-1/3 mb-4 md:mb-0 md:p-4 lg:p-8 border-content" key={index}>
+            <Card className="h-full flex flex-col gap-8  hover:bg-slate-300 relative overflow-hidden py-8">
+              <h4 className="text-2xl font-bold px-8">{projet.title}</h4>
+              <p className="flex-auto px-8">{projet.description}</p>
+              <div className="hidden md:flex md:flex-wrap gap-2 px-8">
+                {
+                  projet.techno.map((techno, index) => {
+                    return <Badge variant={"secondary"} key={index}>{techno}</Badge>
+                  })
+                }
+              </div>
+              <div className="h-full w-full top-0 flex flex-col start-center items-center absolute box-border opacity-0 hover:opacity-100" style={{ backgroundColor: "rgba(0,0,0,0.8)" }}>
+                <div className="h-auto lg:h-1/2 flex flex-col justify-center mb-8 relative w-full">
+                  <Carousel className="h-auto
+                   flex-auto aspect-widescreen w-full relative">
+                    <CarouselContent className="h-full aspect-widescreen w-full m-0 p-0">
+                      {
+                        projet.screenShots?.map((screenShot, index) => {
+                          return <CarouselItem key={`${index}-screenshot-${projet?.title}`} className="aspect-widescreen w-full relative h-48"><Image src={screenShot} alt={screenShot} fill style={{ objectFit: "contain" }} /></CarouselItem>
+                        })
+                      }
+                    </CarouselContent>
+                    <CarouselPrevious className="absolute z-10 left-5 top-1/2" />
+                    <CarouselNext className="absolute z-10 right-5 top-1/2" />
+                  </Carousel>
+                </div>
+                {projet?.link && <a className="btn bg-slate-500 hover:bg-slate-800 p-4 rounded-full text-white font-bold w-fit my-2" href={projet?.link}>Voir le site</a>}
+              </div>
+            </Card>
+          </div>
+        })
+      }
+    </div>
+  </div >
+}

@@ -62,10 +62,10 @@ const NavbarComponent = () => {
 
   return (
     <div
-      className="nav flex items-center justify-between w-full p-3 fixed z-10 px-32 py-10"
+      className="nav flex items-center justify-between w-full fixed z-10 px-4 lg:px-32 py-4 lg:py-10"
     >
-      <h1 className="text-3xl text-white hover:text-gray-600 cursor-pointer">Portfolio</h1>
-      <NavigationMenu>
+      <h1 className="text-xl lg:text-3xl text-white font-bold hover:text-gray-600 cursor-pointer">Portfolio</h1>
+      <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList className="flex gap-8">
           {menu.map((item: Link, index: number) => {
             return (
