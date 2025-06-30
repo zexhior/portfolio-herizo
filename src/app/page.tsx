@@ -55,7 +55,7 @@ const Home = () => {
   }, [index]);
 
   return (
-    <div className="main w-full" ref={container}>
+    <div className="main w-screen overflow-hidden" ref={container}>
       <div className="lg:pt-0 flex flex-col w-full justify-center text-center h-screen items-center bg-slate-950 text-white px-5 lg:px-32 bg-[url('/background.png')] bg-cover">
         <div className="relative w-full h-24 text-center overflow-hidden">
           {
@@ -67,7 +67,7 @@ const Home = () => {
           }
 
         </div>
-        <div className="relative w-full h-20 text-center overflow-hidden">{
+        <div className="relative w-full h-20 text-center overflow-hidden text-slate-500">{
           subText.map((text, index) => {
             return <h2 className={`w-full text-lg lg:text-3xl font-semibold subprofile-${index} overflow-hidden absolute`} key={`subtext-${index}`} style={{ right: 0, top: 0, transform: "translateY(100px)" }}>
               {text}
@@ -700,13 +700,13 @@ const ProjectsComponent = () => {
   }, { scope: containerRef })
 
 
-  return <div id="projects" className="px-5 lg:px-32 py-16" ref={containerRef}>
+  return <div id="projects" className="px-5 lg:px-32 py-8 md:py-16" ref={containerRef}>
     <h3 className="text-4xl font-bold">Mes projets</h3>
-    <div className="w-full flex flex-col md:flex-row md:flex-wrap md:justify-between py-16 box-content" style={{ boxSizing: "border-box" }}>
+    <div className="w-full flex flex-col md:flex-row md:flex-wrap md:justify-between py-4 md:py-16 box-content gap-4 md:gap-0" style={{ boxSizing: "border-box" }}>
       {
         projets.map((projet, index) => {
           return <Card className="projet hover:bg-slate-300 relative overflow-hidden md:w-[calc(30.33%-0.5rem)]" key={index}>
-            <CardHeader className="projet-cardheader p-0 mb-4">
+            <CardHeader className={`projet-cardheader p-0 ${index < projets.length - 1 ? "mb-4" : ""}`}>
               <Carousel className="relative">
                 <CarouselContent className="h-48 w-full m-0 p-0">
                   {
