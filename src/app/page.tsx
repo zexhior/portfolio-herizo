@@ -55,7 +55,7 @@ const Home = () => {
   }, [index]);
 
   return (
-    <div className="main w-screen overflow-hidden" ref={container}>
+    <div className="main w-full overflow-x-hidden md:overflow-x-visible" ref={container}>
       <div className="lg:pt-0 flex flex-col w-full justify-center text-center h-screen items-center bg-slate-950 text-white px-5 lg:px-32 bg-[url('/background.png')] bg-cover">
         <div className="relative w-full h-24 text-center overflow-hidden">
           {
@@ -379,7 +379,7 @@ const SkillsComponent = () => {
         Les différentes technologies maîtrisées
       </h2>
       <div className="flex w-full my-16">
-        <div className="hidden md:flex md:flex-col items-center md:w-1/2 relative">
+        <div className="hidden md:flex md:flex-col md:w-1/2 relative">
           <div className="sticky w-full top-40 flex justify-center" style={{ height: imageSize }}>
             <Image className="absolute frontend-image" src={"/frontend.png"} alt="skills" width={imageSize} height={imageSize} />
             <Image className="absolute backend-image" src={"/backend.png"} alt="skills" width={imageSize} height={imageSize} />
