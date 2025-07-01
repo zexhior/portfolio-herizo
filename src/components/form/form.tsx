@@ -1,17 +1,15 @@
 "use client";
 
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Form } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
-import { ButtonComponent } from "../button/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { useState } from "react";
 import CustomForm from "../customForm/customForm";
-import { Button } from "../ui/button";
-import { DialogClose } from "@radix-ui/react-dialog";
+import Mailjet from "node-mailjet";
 
 const contactSchema = z.object({
     name: z.string().nonempty({ message: "Votre nom ne devrait pas être vide" }).max(2000, { message: "Votre nom est trop" }),
@@ -37,9 +35,15 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
     })
     const [isOpen, setIsOpen] = useState(false)
 
-    const onSubmit = (values: z.infer<typeof contactSchema>) => {
-        setContact({ name: values.name, subject: values.subject, email: values.email, message: values.message })
-        setIsOpen(true)
+    const onSubmit = async (values: z.infer<typeof contactSchema>) => {
+        try {
+            alert('test')
+            const result = await fetch("http://localhost:3400/api/v1/send-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, message: `Nom : ${values.name}, email: ${values.email}, message: ${values.message}` }) })
+            setContact({ ...values })
+            setIsOpen(true)
+        } catch (error) {
+            alert(error)
+        }
     }
 
     return <div>
