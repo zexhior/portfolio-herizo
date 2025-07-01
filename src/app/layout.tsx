@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import NavbarComponent from "@/components/navbar/navbar";
 import FooterComponent from "@/components/footer/footer";
+import { LanguageProvider } from "@/provider/langprovider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,9 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased w-screen overflow-y-auto overflow-x-hidden`}>
-        <NavbarComponent />
-        {children}
-        <FooterComponent />
+        <LanguageProvider>
+          <NavbarComponent />
+          {children}
+          <FooterComponent />
+          <p className="mx-auto text-white text-md w-full flex flex-col md:flex-row lg:flex-wrap items-center justify-around bg-gray-950 p-4">Copyright © : Portfolio Herizo 2025</p>
+        </LanguageProvider>
       </body>
     </html>
   );

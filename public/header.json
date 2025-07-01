@@ -1,0 +1,24 @@
+{
+  "fr": {
+    "textMain": [
+      "Bienvenue à vous!",
+      "Développeur Web & Mobile",
+      "Développeur Fullstack"
+    ],
+    "subText": [
+      "Je m'appelle Herizo et voici mon portfolio",
+      "Je développe des applications web et mobiles dans le monde de la technologie",
+      "Je maintiens et développe que ce soit côté Back-end ou côté Front-end"
+    ],
+    "CV": "Télécharger CV"
+  },
+  "en": {
+    "textMain": ["Welcome!", "Web & Mobile Developer", "Fullstack Developer"],
+    "subText": [
+      "My name is Herizo and this is my portfolio",
+      "I develop web and mobile applications in the tech world",
+      "I maintain and develop on both the Back-end and Front-end sides"
+    ],
+    "CV": "Download CV"
+  }
+}

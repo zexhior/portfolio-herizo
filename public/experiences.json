@@ -1,0 +1,153 @@
+{
+  "fr": {
+    "title": "Expériences",
+    "experiences": [
+      {
+        "logo": "/logo/haikintana.png",
+        "society": "Haikintana Association",
+        "post": "Staigiaire développeur web Fullstack",
+        "years": "Avril 2021 - Octobre 2021",
+        "description": "Création d'une application web pour la gestion des différents membres de l'association ainsi que les différents événements organisés par l'association. Pour gérer la présence ainsi que l'identification des différents membres, on a implémenté une fonctionnalité qui permet de générer le badge avec son QRCode d'identification qui pourra être scanné par l'administrateur pour le pointage lors des événements.",
+        "techno": [
+          "Angular",
+          "Rxjs",
+          "AuthGuard",
+          "JWT",
+          "Django",
+          "DRF",
+          "MariaDB",
+          "Filezila",
+          "Git",
+          "GitHub",
+          "Heroku",
+          "Slack"
+        ]
+      },
+      {
+        "logo": "/logo/vatilab.png",
+        "society": "Vatilab",
+        "post": "Stagiaire développeur web Front-end",
+        "years": "Février 2024 - Juillet 2024",
+        "description": "Maintenance de l'application web et mobile MyBeeDoo, ainsi que l'implémentation des nouvelles fonctionnalités comme l'implémentation d'une messagerie, l'achat de produits, le paiement par messagerie et le refonte de toute l'application en suivant le design fourni par les designers, en respectant le design UX/UI pour donner une bonne expérience aux utilisateurs lors de l'utilisation de l'application.",
+        "techno": [
+          "React",
+          "Redux",
+          "Stripe",
+          "OAuth",
+          "PayPal API",
+          "Git",
+          "Gitlab",
+          "Cypress",
+          "Filezila",
+          "Trello",
+          "Méthode Agile",
+          "AdobeXD"
+        ]
+      },
+
+      {
+        "logo": "/logo/vatilab.png",
+        "society": "Vatilab",
+        "post": "Développeur web Front-end",
+        "years": "Juillet 2024 - Février 2025",
+        "description": "Implémentation des nouveaux projets web et mobile sur le côté front-end en suivant les maquettes fournies par les designers, en respectant le design UX/UI, ainsi que la maintenance des projets existants, comme le débogage des bugs en production ou pour des mises à jour des applications existantes, tout en étant en collaboration avec l'équipe du back-end pour la documentation des appels API rattachés aux projets.",
+        "techno": [
+          "Angular",
+          "Rxjs",
+          "React",
+          "Redux",
+          "Stripe",
+          "OAuth",
+          "PayPal API",
+          "Git",
+          "Gitlab",
+          "Cypress",
+          "Filezila",
+          "Trello",
+          "Méthode Agile",
+          "AdobeXD",
+          "Figma",
+          "Flutter",
+          "GoogleMapAPI",
+          "Strapi",
+          "MariaDB"
+        ]
+      }
+    ]
+  },
+  "en": {
+    "title": "Experiences",
+    "experiences": [
+      {
+        "logo": "/logo/haikintana.png",
+        "society": "Haikintana Association",
+        "post": "Fullstack Web Developer Intern",
+        "years": "April 2021 – October 2021",
+        "description": "Developed a web application for managing association members and organizing events. To handle attendance and member identification, a feature was implemented to generate ID badges with QR codes, which could be scanned by an administrator during events for check-in.",
+        "techno": [
+          "Angular",
+          "RxJS",
+          "AuthGuard",
+          "JWT",
+          "Django",
+          "DRF",
+          "MariaDB",
+          "FileZilla",
+          "Git",
+          "GitHub",
+          "Heroku",
+          "Slack"
+        ]
+      },
+      {
+        "logo": "/logo/vatilab.png",
+        "society": "Vatilab",
+        "post": "Front-end Web Developer Intern",
+        "years": "February 2024 – July 2024",
+        "description": "Maintained the MyBeeDoo web and mobile application, and implemented new features such as messaging, product purchasing, payment via messaging, and a complete redesign of the app based on designs provided by UX/UI designers to improve user experience.",
+        "techno": [
+          "React",
+          "Redux",
+          "Stripe",
+          "OAuth",
+          "PayPal API",
+          "Git",
+          "GitLab",
+          "Cypress",
+          "FileZilla",
+          "Trello",
+          "Agile Methodology",
+          "Adobe XD"
+        ]
+      },
+      {
+        "logo": "/logo/vatilab.png",
+        "society": "Vatilab",
+        "post": "Front-end Web Developer",
+        "years": "July 2024 – February 2025",
+        "description": "Implemented new front-end web and mobile projects based on designer mockups, following UX/UI principles. Also maintained existing projects, fixing production bugs and updating applications, while collaborating with the back-end team on API call documentation.",
+        "techno": [
+          "Angular",
+          "RxJS",
+          "React",
+          "Redux",
+          "Stripe",
+          "OAuth",
+          "PayPal API",
+          "Git",
+          "GitLab",
+          "Cypress",
+          "FileZilla",
+          "Trello",
+          "Agile Methodology",
+          "Adobe XD",
+          "Figma",
+          "Flutter",
+          "Google Maps API",
+          "Strapi",
+          "MariaDB"
+        ]
+      }
+    ]
+  }
+}

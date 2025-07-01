@@ -1,0 +1,44 @@
+{
+  "fr": {
+    "menu": [
+      {
+        "title": "Compétences",
+        "link": "#skills"
+      },
+      {
+        "title": "Formations",
+        "link": "#formations"
+      },
+      {
+        "title": "Expériences",
+        "link": "#experiences"
+      },
+      {
+        "title": "Projets",
+        "link": "#projects"
+      }
+    ],
+    "contact": "Contactez-moi"
+  },
+  "en": {
+    "menu": [
+      {
+        "title": "Skills",
+        "link": "#skills"
+      },
+      {
+        "title": "Education",
+        "link": "#formations"
+      },
+      {
+        "title": "Experience",
+        "link": "#experiences"
+      },
+      {
+        "title": "Projects",
+        "link": "#projects"
+      }
+    ],
+    "contact": "Contact me"
+  }
+}

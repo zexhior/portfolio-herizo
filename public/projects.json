@@ -1,0 +1,150 @@
+{
+  "fr": {
+    "look": "Voir le site",
+    "title": "Projets",
+    "projects": [
+      {
+        "title": "SmartLibrary",
+        "description": "Un projet académique visant à faciliter la gestion de livres et l'accès aux auteurs de livres pour les passionnés de lecture.",
+        "techno": [
+          "React",
+          "reduxtoolkit",
+          "JWT",
+          "Sass",
+          "Flutter",
+          "Node/Express",
+          "MongoDB",
+          "Mongoose",
+          "Git",
+          "GitHub",
+          "Render"
+        ],
+        "link": "https://smartlibrary-bo.onrender.com",
+        "screenShots": [
+          "/mockup/smartlibrary1.png",
+          "/mockup/smartlibrary2.png",
+          "/mockup/smartlibrary3.png"
+        ]
+      },
+      {
+        "title": "MyBeeDoo",
+        "description": "Vatilab propose une application de réseau social et de marketplace pour la vente de produits ou la publication d'annonces, avec des fonctionnalités de chat et de paiement.",
+        "techno": [
+          "React",
+          "redux",
+          "Stripe",
+          "JWT",
+          "react-oauth",
+          "react-facebook-auth",
+          "react-apple-signin-auth",
+          "Paypal",
+          "Socket.io",
+          "Bootstrap",
+          "Git",
+          "GitLab",
+          "Trello"
+        ],
+        "link": "https://mybeedoo.com/",
+        "screenShots": [
+          "/mockup/mybeedoo1.png",
+          "/mockup/mybeedoo2.png",
+          "/mockup/mybeedoo3.png"
+        ]
+      },
+      {
+        "title": "Gestion hotel",
+        "description": "Une application web dédiée à la gestion des réservations et des clients d'un hôtel, ainsi qu'à la gestion des chambres et des services.",
+        "techno": [
+          "React",
+          "JWT",
+          "Bootstrap",
+          "Django",
+          "PostgreSQL",
+          "DRF",
+          "Git",
+          "GitLab",
+          "Trello"
+        ],
+        "screenShots": [
+          "/mockup/hotelnambinina1.png",
+          "/mockup/hotelnambinina2.png",
+          "/mockup/hotelnambinina3.png"
+        ]
+      }
+    ]
+  },
+  "en": {
+    "look": "Go to the website",
+    "title": "Projects",
+    "projects": [
+      {
+        "title": "SmartLibrary",
+        "description": "An academic project aimed at simplifying book management and providing access to book authors for reading enthusiasts.",
+        "techno": [
+          "React",
+          "Redux Toolkit",
+          "JWT",
+          "Sass",
+          "Flutter",
+          "Node/Express",
+          "MongoDB",
+          "Mongoose",
+          "Git",
+          "GitHub",
+          "Render"
+        ],
+        "link": "https://smartlibrary-bo.onrender.com",
+        "screenShots": [
+          "/mockup/smartlibrary1.png",
+          "/mockup/smartlibrary2.png",
+          "/mockup/smartlibrary3.png"
+        ]
+      },
+      {
+        "title": "MyBeeDoo",
+        "description": "Vatilab offers a social network and marketplace application for selling products or posting listings, with integrated chat and payment features.",
+        "techno": [
+          "React",
+          "Redux",
+          "Stripe",
+          "JWT",
+          "react-oauth",
+          "react-facebook-auth",
+          "react-apple-signin-auth",
+          "Paypal",
+          "Socket.io",
+          "Bootstrap",
+          "Git",
+          "GitLab",
+          "Trello"
+        ],
+        "link": "https://mybeedoo.com/",
+        "screenShots": [
+          "/mockup/mybeedoo1.png",
+          "/mockup/mybeedoo2.png",
+          "/mockup/mybeedoo3.png"
+        ]
+      },
+      {
+        "title": "Hotel Management",
+        "description": "A web application dedicated to managing hotel reservations, clients, rooms, and services.",
+        "techno": [
+          "React",
+          "JWT",
+          "Bootstrap",
+          "Django",
+          "PostgreSQL",
+          "DRF",
+          "Git",
+          "GitLab",
+          "Trello"
+        ],
+        "screenShots": [
+          "/mockup/hotelnambinina1.png",
+          "/mockup/hotelnambinina2.png",
+          "/mockup/hotelnambinina3.png"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "fr": {
+    "form": [
+      {
+        "name": "name",
+        "label": "Nom",
+        "type": "text",
+        "placeHolder": "Entrez votre nom"
+      },
+      {
+        "name": "subject",
+        "label": "Object",
+        "type": "text",
+        "placeHolder": "Entrez l'objet de votre message"
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "placeHolder": "Entrez votre email"
+      },
+      {
+        "name": "message",
+        "label": "Message",
+        "type": "text",
+        "placeHolder": "Entrez votre message"
+      }
+    ]
+  },
+  "en": {
+    "form": [
+      {
+        "name": "name",
+        "label": "Name",
+        "type": "text",
+        "placeHolder": "Enter your name"
+      },
+      {
+        "name": "subject",
+        "label": "Subject",
+        "type": "text",
+        "placeHolder": "Enter the subject of your message"
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "placeHolder": "Enter your email"
+      },
+      {
+        "name": "message",
+        "label": "Message",
+        "type": "text",
+        "placeHolder": "Enter your message"
+      }
+    ]
+  }
+}

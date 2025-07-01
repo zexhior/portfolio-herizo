@@ -7,9 +7,10 @@ import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomForm from "../customForm/customForm";
 import Mailjet from "node-mailjet";
+import { useLanguage } from "@/provider/langprovider";
 
 const contactSchema = z.object({
     name: z.string().nonempty({ message: "Votre nom ne devrait pas être vide" }).max(2000, { message: "Votre nom est trop" }),
@@ -22,7 +23,16 @@ interface IFormComponent {
     data?: Object | undefined | null
 }
 
+interface IForm {
+    name: string
+    label: string
+    placeHolder: string
+    type: string
+}
+
 const FormComponent: React.FC<IFormComponent> = ({ data }) => {
+    const { lang } = useLanguage();
+    const [formParams, setFormParams] = useState<IForm[]>([])
     const [contact, setContact] = useState<{ name: string, subject: string, email: string, message: string }>({ name: "", subject: "", email: "", message: "" })
     const form = useForm<z.infer<typeof contactSchema>>({
         resolver: zodResolver(contactSchema),
@@ -35,9 +45,17 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
     })
     const [isOpen, setIsOpen] = useState(false)
 
+    useEffect(() => {
+        fetch('/form.json').then(response => {
+            response.json().then(data => {
+                const result: { form: IForm[] } = data[lang]
+                setFormParams(result.form)
+            })
+        })
+    }, [lang])
+
     const onSubmit = async (values: z.infer<typeof contactSchema>) => {
         try {
-            alert('test')
             const result = await fetch("http://localhost:3400/api/v1/send-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, message: `Nom : ${values.name}, email: ${values.email}, message: ${values.message}` }) })
             setContact({ ...values })
             setIsOpen(true)
@@ -46,41 +64,26 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
         }
     }
 
+    const formItems = [
+        <Input />, <Input />, <Input />, <Textarea />
+    ]
+
     return <div>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <CustomForm
-                    formControl={form}
-                    type="text"
-                    label="Nom"
-                    name="name"
-                    placeholder="Votre nom" className="bg-white text-black" >
-                    <Input />
-                </CustomForm>
-                <CustomForm
-                    formControl={form}
-                    type="text"
-                    label="Objet"
-                    name="subject"
-                    placeholder="Votre objet" className="bg-white text-black" >
-                    <Input />
-                </CustomForm>
-                <CustomForm
-                    formControl={form}
-                    type="email"
-                    label="Email"
-                    name="email"
-                    placeholder="Votre email" className="bg-white text-black">
-                    <Input />
-                </CustomForm>
-                <CustomForm
-                    formControl={form}
-                    label={"Message"}
-                    name="message"
-                    placeholder="Votre message"
-                    className={"bg-white text-black h-52"}>
-                    <Textarea />
-                </CustomForm>
+                {
+                    formParams?.map((item, index) => {
+                        return <CustomForm
+                            key={index}
+                            formControl={form}
+                            type={item.type}
+                            label={item.label}
+                            name={item.name}
+                            placeholder={item.placeHolder} className={`bg-white text-black ${index < formParams.length - 1 ? "" : "h-52"}`} >
+                            {formItems[index]}
+                        </CustomForm>
+                    })
+                }
                 <button className="mt-4 w-full bg-slate-600 rounded-md text-white text-lg font-bold p-4" type="submit">Envoyer</button>
                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                     <DialogContent>

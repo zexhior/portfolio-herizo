@@ -15,7 +15,6 @@ const FooterComponent = () => {
 
   return (
     <div id="footer">
-      <p className="mx-auto text-white text-md">Copyright © : Portfolio Herizo</p>
       <div className="w-full flex flex-col md:flex-row lg:flex-wrap items-center justify-around text-white bg-gray-950 flex-1 px-4 lg:px-32 lg:py-16">
         <div className="w-full md:w-1/2 px-10 flex">
           <div className="flex flex-col gap-2 text-gray-200">

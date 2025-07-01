@@ -8,53 +8,50 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
-import { Button } from "../ui/button";
 import { ButtonComponent } from "../button/button";
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger, DrawerTitle } from "../ui/drawer";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { FaBriefcase, FaGraduationCap, FaLaptopCode, FaTools } from "react-icons/fa";
+import { useGSAP } from "@gsap/react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { useLanguage } from "@/provider/langprovider";
 
 type Link = {
-  icon: React.ReactNode;
   title: string;
   link: string;
 };
 
 const NavbarComponent = () => {
+  const { lang, setLang } = useLanguage();
   const [open, setOpen] = useState(false);
-  const menu: Link[] = [
-    {
-      icon: <FaTools size={20} />,
-      title: "Compétences",
-      link: "#skills",
-    },
-    {
-      icon: <FaGraduationCap size={20} />,
-      title: "Formations",
-      link: "#formations",
-    },
-    {
-      icon: <FaBriefcase size={20} />,
-      title: "Expériences",
-      link: "#experiences",
-    },
-    {
-      icon: <FaLaptopCode size={20} />,
-      title: "Projets",
-      link: "#projects",
-    },
+  const [isOpenDropDown, setIsOpenDropDown] = useState(false);
+  const [menu, setMenu] = useState<Link[]>([]);
+  const [contactText, setContactText] = useState<string>("");
+  const iconsMenu = [
+    <FaTools size={20} />,
+    <FaGraduationCap size={20} />,
+    <FaBriefcase size={20} />,
+    <FaLaptopCode size={20} />
   ];
-  const idSection = ["skills", "formations", "experiences", "projects", "footer"];
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
+    fetch("/navbar.json").then(response => {
+      response.json().then((data) => {
+        const result: { menu: Link[], contact: string } = data[lang];
+        setMenu(result.menu);
+        setContactText(result.contact);
+      })
+    })
+  }, [lang])
+
+  useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -65,41 +62,64 @@ const NavbarComponent = () => {
     });
     tl.set(".nav", { backgroundColor: "transparent" });
     tl.to(".nav", { backgroundColor: "#1a1a1aa3", duration: 1 });
-  }, [])
+  }, { dependencies: [isDesktop, menu] });
 
-  const handlerScrollTo = (index: number) => {
+  const handlerScrollTo = (id: string) => {
     gsap.registerPlugin(ScrollToPlugin);
-    gsap.to(window, { duration: 0.5, scrollTo: { y: `#${idSection[index]}`, offsetY: 100 } });
+    gsap.to(window, { duration: 0.5, scrollTo: { y: id, offsetY: 100 } });
     setOpen(false);
   }
+  const handlerShowContext = () => {
+    setIsOpenDropDown(!isOpenDropDown)
+  }
+
+  const handlerChangeLang = (lang: string) => {
+    setLang(lang);
+    setIsOpenDropDown(false)
+  }
+
+  useEffect(() => {
+    const body = document.body;
+    body.removeAttribute("data-scroll-lock");
+    body.style.overflow = "auto"; // Facultatif
+  }, [isOpenDropDown])
 
   return (
     <div
       className="nav flex items-center justify-between w-full fixed z-10 px-4 lg:px-32 py-4 lg:py-10"
     >
-      <h1 className="text-xl lg:text-3xl text-white font-bold hover:text-gray-600 cursor-pointer">Portfolio</h1>
+      <div className="flex gap-4"><h1 className="text-xl lg:text-3xl text-white font-bold hover:text-gray-600 cursor-pointer">Portfolio</h1>
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger className="bg-slate-500 rounded-full text-white hover:text-gray-600 font-bold px-6 outline-none" onClick={handlerShowContext}>
+            {lang}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-slate-800 text-white border-md rounded-lg mt-2 w-24 p-2">
+            <DropdownMenuItem className="text-lg font-bold hover:bg-slate-900 p-2 rounded-lg" onSelect={() => handlerChangeLang("fr")}>
+              fr
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-lg font-bold hover:bg-slate-900 p-2 rounded-lg" onSelect={() => handlerChangeLang("en")}>
+              en
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       {isDesktop ? (<NavigationMenu className="lg:flex">
         <NavigationMenuList className="flex gap-8">
           {menu.map((item: Link, index: number) => {
             return (
               <NavigationMenuItem key={index}>
-                <p
-                  className="bg-transparent"
-                  onClick={() => {
-                    handlerScrollTo(index);
-                  }}
-                >
-                  <NavigationMenuLink className="bg-transparent text-white hover:text-gray-600 font-bold">
-                    {item.title}
-                  </NavigationMenuLink>
-                </p>
+                <NavigationMenuLink className="bg-transparent text-white hover:text-gray-600 font-bold cursor-pointer" onClick={() => {
+                  handlerScrollTo(item.link);
+                }}>
+                  {item.title}
+                </NavigationMenuLink>
               </NavigationMenuItem>
             );
           })}
           <NavigationMenuItem>
             <ButtonComponent func={() => { }}><p onClick={() => {
-              handlerScrollTo(menu.length);
-            }}>Contacter-moi</p></ButtonComponent>
+              handlerScrollTo("#footer");
+            }}>{contactText}</p></ButtonComponent>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>) :
@@ -119,25 +139,25 @@ const NavbarComponent = () => {
                       <p
                         className="flex bg-transparent"
                         onClick={() => {
-                          handlerScrollTo(index);
+                          handlerScrollTo(item.link);
                         }}
                       >
                         <NavigationMenuLink className="flex gap-4 bg-transparent text-white hover:text-gray-600 font-bold">
-                          <span>{item.icon}</span>{item.title}
+                          <span>{iconsMenu[index]}</span>{item.title}
                         </NavigationMenuLink>
                       </p>
                     </NavigationMenuItem>
                   );
                 })}
                 <ButtonComponent func={() => { }}><p onClick={() => {
-                  handlerScrollTo(menu.length);
-                }}>Contacter-moi</p></ButtonComponent>
+                  handlerScrollTo("#footer");
+                }}>{contactText}</p></ButtonComponent>
               </NavigationMenuList>
             </NavigationMenu>
           </DrawerContent>
         </Drawer>)
       }
-    </div>
+    </div >
   );
 };
 
