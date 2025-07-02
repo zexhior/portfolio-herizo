@@ -20,6 +20,7 @@ import { FaBriefcase, FaGraduationCap, FaLaptopCode, FaTools } from "react-icons
 import { useGSAP } from "@gsap/react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { useLanguage } from "@/provider/langprovider";
+import Image from "next/image";
 
 type Link = {
   title: string;
@@ -88,7 +89,8 @@ const NavbarComponent = () => {
     <div
       className="nav flex items-center justify-between w-full fixed z-10 px-4 lg:px-32 py-4 lg:py-10"
     >
-      <div className="flex gap-4"><h1 className="text-xl lg:text-3xl text-white font-bold hover:text-gray-600 cursor-pointer">Portfolio</h1>
+      <div className="flex gap-4">
+        <Image src='/logo/herizo-light.png' alt="logo" width={100} height={80} />
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="bg-slate-500 rounded-full text-white hover:text-gray-600 font-bold px-6 outline-none" onClick={handlerShowContext}>
             {lang}

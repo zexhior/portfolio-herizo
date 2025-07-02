@@ -122,6 +122,7 @@ const SkillsComponent = () => {
   const duration = 0.3;
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
     fetch("/skills.json").then((response: any) => {
       response.json().then((data: any) => {
         const skills: { skillsTitle: string, skills: { title: string, sections: ISkills[] }[] } = data[lang]
@@ -133,12 +134,11 @@ const SkillsComponent = () => {
 
   useGSAP(() => {
     if (container?.current) {
+      const distanceImage = 50;
       const width = container?.current?.getBoundingClientRect().width
       const start = "top center";
-      gsap.registerPlugin(ScrollTrigger)
       for (let i = 0; i < skillsState.length; i++) {
         gsap.set(`.skill-${i}`, { x: width })
-        gsap.set(`.skill-image-${i}`, { y: distance, opacity: 0 })
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: `.skill-${i}`,
@@ -154,6 +154,15 @@ const SkillsComponent = () => {
         setTimeLines(prev => {
           return [...prev, tl]
         })
+      }
+    }
+  }, { scope: container, dependencies: [skillsState, lang] })
+
+  useGSAP(() => {
+    if (container?.current) {
+      const distanceImage = 50;
+      for (let i = 0; i < skillsState.length; i++) {
+        gsap.set(`.skill-image-${i}`, { y: distanceImage, opacity: 0 })
         const tlImage = gsap.timeline({
           scrollTrigger: {
             trigger: `.skill-${i}`,
@@ -171,7 +180,7 @@ const SkillsComponent = () => {
         })
       }
     }
-  }, { scope: container, dependencies: [skillsState] })
+  }, [])
 
   const icons = [
     [

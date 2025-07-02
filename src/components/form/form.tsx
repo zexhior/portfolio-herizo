@@ -34,6 +34,7 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
     const { lang } = useLanguage();
     const [formParams, setFormParams] = useState<IForm[]>([])
     const [contact, setContact] = useState<{ name: string, subject: string, email: string, message: string }>({ name: "", subject: "", email: "", message: "" })
+    const [sendText, setSendText] = useState<string>("")
     const form = useForm<z.infer<typeof contactSchema>>({
         resolver: zodResolver(contactSchema),
         defaultValues: {
@@ -48,8 +49,9 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
     useEffect(() => {
         fetch('/form.json').then(response => {
             response.json().then(data => {
-                const result: { form: IForm[] } = data[lang]
+                const result: { form: IForm[], sendText: string } = data[lang]
                 setFormParams(result.form)
+                setSendText(result.sendText)
             })
         })
     }, [lang])
@@ -84,7 +86,7 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
                         </CustomForm>
                     })
                 }
-                <button className="mt-4 w-full bg-slate-600 rounded-md text-white text-lg font-bold p-4" type="submit">Envoyer</button>
+                <button className="mt-4 w-full bg-slate-600 rounded-md text-white text-lg font-bold p-4" type="submit">{sendText}</button>
                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                     <DialogContent>
                         <DialogHeader>

@@ -25,7 +25,8 @@
         "type": "text",
         "placeHolder": "Entrez votre message"
       }
-    ]
+    ],
+    "sendText": "Envoyer"
   },
   "en": {
     "form": [
@@ -53,6 +54,7 @@
         "type": "text",
         "placeHolder": "Enter your message"
       }
-    ]
+    ],
+    "sendText": "Send"
   }
 }
