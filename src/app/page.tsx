@@ -114,6 +114,7 @@ const SkillsComponent = () => {
   const container = useRef<HTMLDivElement>(null);
   const [skillsTitle, setSkillsTitle] = useState<string>('');
   const [skillsState, setSkillsState] = useState<{ title: string, sections: ISkills[] }[]>([]);
+  const [timeLines, setTimeLines] = useState<gsap.core.Timeline[]>([]);
   const images = ["/frontend.png", "/backend.png", "/bd.png"]
   const imageSize = 400;
   const distance = 100;
@@ -132,23 +133,46 @@ const SkillsComponent = () => {
 
   useGSAP(() => {
     if (container?.current) {
-      for (let i = 0; i < skillsState.length; i++) {
-        gsap.set(`.skill-image-${i}`, { y: distance, opacity: 0 })
-        const tlImage = gsap.timeline({
-          scrollTrigger: {
-            trigger: `.skill-${i}`,
-            start: "top center",
-            end: "bottom center",
-            toggleActions: "play reverse play reverse",
-          }
-        })
-        tlImage.to(`.skill-image-${i}`, {
-          y: 0, opacity: 1, duration,
-          animationTimingFunction: "ease-in",
-        });
-      }
+      const width = container.current.clientWidth;
+      setTimeLines((prev) => {
+        const newTimeLines = [];
+        for (let i = 0; i < skillsState.length; i++) {
+          gsap.set(`.skill-${i}`, { x: width })
+          gsap.set(`.skill-image-${i}`, { y: distance, opacity: 0 })
+          newTimeLines.push(gsap.timeline({
+            scrollTrigger: {
+              trigger: `#container-skill-${i}`,
+              start: "top center",
+              end: "bottom center",
+              onEnter: () => {
+                gsap.to(`.skill-${i}`, { x: 0, duration: 0.7, animationTimingFunction: "ease-in" })
+                gsap.to(`.skill-image-${i}`, {
+                  y: 0, opacity: 1, duration: 0.2,
+                  animationTimingFunction: "ease-in",
+                });
+              },
+              onEnterBack: () => {
+                gsap.to(`.skill-${i}`, { x: 0, duration: 0.7, animationTimingFunction: "ease-in" })
+                gsap.to(`.skill-image-${i}`, {
+                  y: 0, opacity: 1, duration: 0.2,
+                  animationTimingFunction: "ease-in",
+                });
+              },
+              onLeave: () => {
+                gsap.to(`.skill-${i}`, { x: width, duration: 0.7, animationTimingFunction: "ease-in" })
+                gsap.to(`.skill-image-${i}`, { y: distance, opacity: 0, duration: 0.2, animationTimingFunction: "ease-in" })
+              },
+              onLeaveBack: () => {
+                gsap.to(`.skill-${i}`, { x: width, duration: 0.7, animationTimingFunction: "ease-in" })
+                gsap.to(`.skill-image-${i}`, { y: distance, opacity: 0, duration: 0.2, animationTimingFunction: "ease-in" })
+              },
+            }
+          }))
+        }
+        return newTimeLines
+      })
     }
-  }, { scope: container, dependencies: [skillsState, images] });
+  }, { scope: container, dependencies: [skillsState] });
 
   const icons = [
     [
@@ -213,18 +237,20 @@ const SkillsComponent = () => {
           {
             skillsState.map((skill, index) => {
               return (
-                <div className={`skill-${index} pb - 4 lg: pb - 8`} key={`${skill}-${index}`}>
-                  <div className="flex items-center gap-2 pb-8">
-                    <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
-                      {index + 1}
+                <div id={`container-skill-${index}`} className="w-full " key={`${skill}-${index}`}>
+                  <div className={`skill-${index} pb - 4 lg: pb - 8`} >
+                    <div className="flex items-center gap-2 pb-8">
+                      <div className="flex justify-center items-center w-12 h-12 text-2xl font-bold border-white border-4 px-4 py-4 mr-2 rounded-full">
+                        {index + 1}
+                      </div>
+                      <h4 className="text-4xl font-bold">{skill.title}</h4>
                     </div>
-                    <h4 className="text-4xl font-bold">{skill.title}</h4>
-                  </div>
-                  <hr className="pb-8 border-gray-500" />
-                  <div className="flex flex-col w-full">
-                    {skill.sections.map((skill, i) => {
-                      return <SkillSection skill={skill} key={skill.index} icon={icons[index][i]} />;
-                    })}
+                    <hr className="pb-8 border-gray-500" />
+                    <div className="flex flex-col w-full">
+                      {skill.sections.map((skill, i) => {
+                        return <SkillSection skill={skill} key={skill.index} icon={icons[index][i]} />;
+                      })}
+                    </div>
                   </div>
                 </div>
               );
