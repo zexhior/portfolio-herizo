@@ -58,7 +58,7 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
 
     const onSubmit = async (values: z.infer<typeof contactSchema>) => {
         try {
-            const result = await fetch("http://localhost:3400/api/v1/send-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, message: `Nom : ${values.name}, email: ${values.email}, message: ${values.message}` }) })
+            const result = await fetch("https://mail-service-1-bl7t.onrender.com/api/v1/send-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, message: `Nom : ${values.name}, email: ${values.email}, message: ${values.message}` }) })
             setContact({ ...values })
             setIsOpen(true)
         } catch (error) {
