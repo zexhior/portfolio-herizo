@@ -8,7 +8,6 @@ import { BiLogoMongodb, BiLogoPostgresql } from "react-icons/bi";
 import { ButtonComponent } from "@/components/button/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from "next/image";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useLanguage } from "@/provider/langprovider";
@@ -19,7 +18,7 @@ const Home = () => {
   const timeLineMain = gsap.timeline({ repeat: - 1 });
   const timeLineSub = gsap.timeline({ repeat: - 1 });
   const container = useRef(null);
-  const { lang } = useLanguage();
+  const langage = useLanguage();
   const [textMain, setTextMain] = useState<string[]>([]);
   const [subText, setSubText] = useState<string[]>([]);
   const [cv, setCV] = useState<string>("");
@@ -27,13 +26,13 @@ const Home = () => {
   useEffect(() => {
     fetch('/header.json').then(response => {
       response.json().then((data) => {
-        const headerData: { textMain: string[], subText: string[], CV: string } = data[lang]
+        const headerData: { textMain: string[], subText: string[], CV: string } = data[langage.lang]
         setTextMain(headerData.textMain)
         setSubText(headerData.subText)
         setCV(headerData.CV)
       })
     })
-  }, [lang])
+  }, [langage])
 
   const handlerAnimation = (id: string, timeline: gsap.core.Timeline) => {
     timeline.set(id, {
@@ -44,9 +43,7 @@ const Home = () => {
       y: 0,
       opacity: 1,
       duration: 0.5,
-    })
-    /********************************/
-    timeline.to(id, {
+    }).to(id, {
       y: 100,
       opacity: 0,
       duration: 0.5,
@@ -59,7 +56,7 @@ const Home = () => {
       handlerAnimation(`.profile-${i}`, timeLineMain)
       handlerAnimation(`.subprofile-${i}`, timeLineSub)
     }
-  }, { dependencies: [textMain, subText] })
+  }, { dependencies: [textMain, subText, langage.lang] })
 
   return (
     <div className="main w-full overflow-x-hidden md:overflow-x-visible" ref={container}>
@@ -229,7 +226,7 @@ const SkillsComponent = () => {
           <div className="sticky w-full top-40 flex justify-center" style={{ height: imageSize }}>
             {
               images.map((image, index) => {
-                return <Image className={`absolute skill-image-${index}`} src={image} alt="skills" width={imageSize} height={imageSize} key={`skill-image-${index}`} />
+                return <img className={`absolute skill-image-${index}`} src={image} alt="skills" width={imageSize} height={imageSize} key={`skill-image-${index}`} />
               })
             }
           </div>
@@ -315,7 +312,7 @@ const FormationsComponent = () => {
             key={index}
           >
             <div className="flex h-80 w-ful lg:w-1/2 relative">
-              <Image src={formation?.image} alt="ispm" className="w-full" fill style={{ objectFit: "contain" }} />
+              <img src={formation?.image} alt="ispm" className="w-full" style={{ objectFit: "contain" }} />
             </div>
             <FormationSection formation={formation} index={index} />
           </div>
@@ -359,7 +356,9 @@ const ExperiencesComponent = () => {
         className={`relative flex flex-col w-full lg:w-1/3 text-justify ${index < total - 1 ? "lg:pe-8" : ""
           } `}
       >
-        <div className="flex items-center justify-center relative w-full h-32 my-8"><Image src={experience.logo} alt="haikintana" fill style={{ objectFit: "contain" }} />,</div>
+        <div className="flex items-center justify-center relative w-full h-32 my-8">
+          <img src={experience.logo} className="w-full h-24" alt="haikintana" style={{ objectFit: "contain" }} />
+        </div>
         <h3 className="text-3xl">{experience.society}</h3>
         <h4 className="text-md text-gray-500">Poste : {experience.post}</h4>
         <h5 className="text-md pb-8">{experience.years}</h5>
@@ -458,7 +457,9 @@ const ProjectsComponent = () => {
                 <CarouselContent className="h-48 w-full m-0 p-0">
                   {
                     project.screenShots?.map((screenShot, index) => {
-                      return <CarouselItem key={`${index} -screenshot - ${project?.title} `} className="relative bg-primary"><Image src={screenShot} alt={screenShot} fill style={{ objectFit: "contain" }} /></CarouselItem>
+                      return <CarouselItem key={`${index}-screenshot-${project?.title} `} className="bg-primary mx-0 px-0">
+                        <img className="w-full  h-full" src={screenShot} alt={screenShot} style={{ objectFit: "contain" }} />
+                      </CarouselItem>
                     })
                   }
                 </CarouselContent>
