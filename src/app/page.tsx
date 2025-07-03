@@ -114,8 +114,6 @@ const SkillsComponent = () => {
   const container = useRef<HTMLDivElement>(null);
   const [skillsTitle, setSkillsTitle] = useState<string>('');
   const [skillsState, setSkillsState] = useState<{ title: string, sections: ISkills[] }[]>([]);
-  const [timeLines, setTimeLines] = useState<gsap.core.Timeline[]>([]);
-  const [timeLinesImage, setTimeLinesImage] = useState<gsap.core.Timeline[]>([]);
   const images = ["/frontend.png", "/backend.png", "/bd.png"]
   const imageSize = 400;
   const distance = 100;
@@ -130,39 +128,12 @@ const SkillsComponent = () => {
         setSkillsTitle(skills.skillsTitle)
       });
     })
-  }, [lang])
+  }, [container, lang])
 
   useGSAP(() => {
     if (container?.current) {
-      const distanceImage = 50;
-      const width = container?.current?.getBoundingClientRect().width
-      const start = "top center";
       for (let i = 0; i < skillsState.length; i++) {
-        gsap.set(`.skill-${i}`, { x: width })
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: `.skill-${i}`,
-            start,
-            end: "bottom center",
-            toggleActions: "play reverse play reverse",
-          }
-        })
-        tl.to(`.skill-${i}`, {
-          x: 0, duration: 0.75,
-          animationTimingFunction: "ease-in-out",
-        });
-        setTimeLines(prev => {
-          return [...prev, tl]
-        })
-      }
-    }
-  }, { scope: container, dependencies: [skillsState, lang] })
-
-  useGSAP(() => {
-    if (container?.current) {
-      const distanceImage = 50;
-      for (let i = 0; i < skillsState.length; i++) {
-        gsap.set(`.skill-image-${i}`, { y: distanceImage, opacity: 0 })
+        gsap.set(`.skill-image-${i}`, { y: distance, opacity: 0 })
         const tlImage = gsap.timeline({
           scrollTrigger: {
             trigger: `.skill-${i}`,
@@ -175,12 +146,9 @@ const SkillsComponent = () => {
           y: 0, opacity: 1, duration,
           animationTimingFunction: "ease-in",
         });
-        setTimeLinesImage(prev => {
-          return [...prev, tlImage]
-        })
       }
     }
-  }, [])
+  }, { scope: container, dependencies: [skillsState, images] });
 
   const icons = [
     [
@@ -224,24 +192,24 @@ const SkillsComponent = () => {
   return (
     <div
       id="skills"
-      className="px-5 lg:px-32 py-16 bg-gray-900 text-white"
+      className="py-16 bg-gray-900 text-white"
       style={{ boxSizing: "content-box" }}
       ref={container}
     >
-      <h2 className="text-4xl font-bold">
+      <h2 className="text-4xl font-bold px-5 lg:px-32">
         {skillsTitle}
       </h2>
-      <div className="flex w-full my-16">
-        <div className="hidden md:flex md:flex-col md:w-1/2 relative">
+      <div className="flex w-full my-16 px-5 lg:px-32">
+        <div className="hidden md:inline md:w-1/2 relative overflow-visible">
           <div className="sticky w-full top-40 flex justify-center" style={{ height: imageSize }}>
             {
               images.map((image, index) => {
-                return <Image id={``} className={`absolute skill-image-${index}`} src={image} alt="skills" width={imageSize} height={imageSize} key={`skill-image-${index}`} />
+                return <img className={`absolute skill-image-${index}`} src={image} alt="skills" width={imageSize} height={imageSize} key={`skill-image-${index}`} />
               })
             }
           </div>
         </div>
-        <div className="w-full md:w-1/2 border-l-2 border-gray-500 p-8 overflow-hidden">
+        <div className="w-full md:w-1/2 border-l-2 border-gray-500 p-8 overflow-x-hidden">
           {
             skillsState.map((skill, index) => {
               return (
@@ -320,7 +288,7 @@ const FormationsComponent = () => {
             key={index}
           >
             <div className="flex h-80 w-ful lg:w-1/2 relative">
-              <Image src={formation?.image} alt="ispm" fill style={{ objectFit: "contain" }} />
+              <img src={formation?.image} alt="ispm" className="w-full" style={{ objectFit: "contain" }} />
             </div>
             <FormationSection formation={formation} index={index} />
           </div>

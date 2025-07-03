@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased w-screen overflow-y-auto overflow-x-hidden`}>
+      <body className={`${inter.className} antialiased w-full`}>
         <LanguageProvider>
           <NavbarComponent />
           {children}

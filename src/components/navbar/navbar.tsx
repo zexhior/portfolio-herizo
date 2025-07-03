@@ -39,6 +39,7 @@ const NavbarComponent = () => {
     <FaBriefcase size={20} />,
     <FaLaptopCode size={20} />
   ];
+  const logo = '/logo/herizo-light.png';
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -79,18 +80,12 @@ const NavbarComponent = () => {
     setIsOpenDropDown(false)
   }
 
-  useEffect(() => {
-    const body = document.body;
-    body.removeAttribute("data-scroll-lock");
-    body.style.overflow = "auto"; // Facultatif
-  }, [isOpenDropDown])
-
   return (
     <div
       className="nav flex items-center justify-between w-full fixed z-10 px-4 lg:px-32 py-4 lg:py-10"
     >
       <div className="flex gap-4">
-        <Image src='/logo/herizo-light.png' alt="logo" width={100} height={80} />
+        <img src={logo} alt="logo" width={100} height={80} />
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="bg-slate-500 rounded-full text-white hover:text-gray-600 font-bold px-6 outline-none" onClick={handlerShowContext}>
             {lang}
