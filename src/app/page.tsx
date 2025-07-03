@@ -11,12 +11,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useLanguage } from "@/provider/langprovider";
+import { time } from "console";
 
 const Home = () => {
 
   gsap.registerPlugin(useGSAP);
-  const timeLineMain = gsap.timeline({ repeat: - 1 });
-  const timeLineSub = gsap.timeline({ repeat: - 1 });
+  const [timeLineMain, setTimeLineMain] = useState(gsap.timeline({ repeat: - 1 }));
+  const [timeLineSub, setTimeLineSub] = useState(gsap.timeline({ repeat: - 1 }));
   const container = useRef(null);
   const langage = useLanguage();
   const [textMain, setTextMain] = useState<string[]>([]);
@@ -26,6 +27,10 @@ const Home = () => {
   useEffect(() => {
     fetch('/header.json').then(response => {
       response.json().then((data) => {
+        if (timeLineMain.isActive() || timeLineSub.isActive()) {
+          timeLineMain.clear();
+          timeLineSub.clear();
+        }
         const headerData: { textMain: string[], subText: string[], CV: string } = data[langage.lang]
         setTextMain(headerData.textMain)
         setSubText(headerData.subText)
@@ -35,7 +40,7 @@ const Home = () => {
   }, [langage])
 
   const handlerAnimation = (id: string, timeline: gsap.core.Timeline) => {
-    timeline.set(id, {
+    gsap.set(id, {
       y: 100,
       opacity: 0,
     })
@@ -52,11 +57,13 @@ const Home = () => {
   }
 
   useGSAP(() => {
+    // setTimeLineMain(() => gsap.timeline({ repeat: -1 }));
+    // setTimeLineSub(() => gsap.timeline({ repeat: -1 }));
     for (let i = 0; i < textMain.length; i++) {
       handlerAnimation(`.profile-${i}`, timeLineMain)
       handlerAnimation(`.subprofile-${i}`, timeLineSub)
     }
-  }, { dependencies: [textMain, subText, langage.lang] })
+  }, { scope: container, dependencies: [textMain] });
 
   return (
     <div className="main w-full overflow-x-hidden md:overflow-x-visible" ref={container}>
@@ -69,15 +76,16 @@ const Home = () => {
               </h1>
             })
           }
-
         </div>
-        <div className="relative w-full h-20 text-center overflow-hidden text-slate-500">{
-          subText.map((text, index) => {
-            return <h2 className={`w-full text-lg lg:text-3xl font-semibold subprofile-${index} overflow-hidden absolute`} key={`subtext-${index}`} style={{ right: 0, top: 0, transform: "translateY(100px)" }}>
-              {text}
-            </h2>
-          })
-        }</div>
+        <div className="relative w-full h-20 text-center overflow-hidden text-slate-500">
+          {
+            subText.map((text, index) => {
+              return <h2 className={`w-full text-lg lg:text-3xl font-semibold subprofile-${index} overflow-hidden absolute`} key={`subtext-${index}`} style={{ right: 0, top: 0, transform: "translateY(100px)" }}>
+                {text}
+              </h2>
+            })
+          }
+        </div>
         <div className="flex gap-4 mt-4">
           <ButtonComponent
             func={() => { }}

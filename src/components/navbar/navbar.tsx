@@ -6,6 +6,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import { ButtonComponent } from "../button/button";
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ import { FaBriefcase, FaGraduationCap, FaLaptopCode, FaTools } from "react-icons
 import { useGSAP } from "@gsap/react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { useLanguage } from "@/provider/langprovider";
-import { LanguageContextType } from "@/app/types/languageType";
+import Image from "next/image";
 
 type Link = {
   title: string;
@@ -27,16 +28,16 @@ type Link = {
 };
 
 const NavbarComponent = () => {
-  const langage: LanguageContextType | null = useLanguage();
+  const { lang, setLang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const [menu, setMenu] = useState<Link[]>([]);
   const [contactText, setContactText] = useState<string>("");
   const iconsMenu = [
-    <FaTools size={20} key="icon-menu-1" />,
-    <FaGraduationCap size={20} key="icon-menu-2" />,
-    <FaBriefcase size={20} key="icon-menu-3" />,
-    <FaLaptopCode size={20} key="icon-menu-4" />
+    <FaTools size={20} />,
+    <FaGraduationCap size={20} />,
+    <FaBriefcase size={20} />,
+    <FaLaptopCode size={20} />
   ];
   const logo = '/logo/herizo-light.png';
 
@@ -45,12 +46,12 @@ const NavbarComponent = () => {
   useEffect(() => {
     fetch("/navbar.json").then(response => {
       response.json().then((data) => {
-        const result: { menu: Link[], contact: string } = data[langage?.lang];
+        const result: { menu: Link[], contact: string } = data[lang];
         setMenu(result.menu);
         setContactText(result.contact);
       })
     })
-  }, [langage])
+  }, [lang])
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -75,7 +76,7 @@ const NavbarComponent = () => {
   }
 
   const handlerChangeLang = (lang: string) => {
-    langage.setLang(lang);
+    setLang(lang);
     setIsOpenDropDown(false)
   }
 
@@ -87,7 +88,7 @@ const NavbarComponent = () => {
         <img src={logo} alt="logo" width={100} height={80} />
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="bg-slate-500 rounded-full text-white hover:text-gray-600 font-bold px-6 outline-none" onClick={handlerShowContext}>
-            {langage.lang}
+            {lang}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-slate-800 text-white border-md rounded-lg mt-2 w-24 p-2">
             <DropdownMenuItem className="text-lg font-bold hover:bg-slate-900 p-2 rounded-lg" onSelect={() => handlerChangeLang("fr")}>
@@ -103,15 +104,13 @@ const NavbarComponent = () => {
         <NavigationMenuList className="flex gap-8">
           {menu.map((item: Link, index: number) => {
             return (
-              <div key={index}>
-                <NavigationMenuItem >
-                  <NavigationMenuLink className="bg-transparent text-white hover:text-gray-600 font-bold cursor-pointer" onClick={() => {
-                    handlerScrollTo(item.link);
-                  }}>
-                    {item.title}
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </div>
+              <NavigationMenuItem key={index}>
+                <NavigationMenuLink className="bg-transparent text-white hover:text-gray-600 font-bold cursor-pointer" onClick={() => {
+                  handlerScrollTo(item.link);
+                }}>
+                  {item.title}
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             );
           })}
           <NavigationMenuItem>
@@ -133,7 +132,7 @@ const NavbarComponent = () => {
                 </DrawerHeader>
                 {menu.map((item: Link, index: number) => {
                   return (
-                    <div key={index}><NavigationMenuItem >
+                    <NavigationMenuItem key={index} className="v">
                       <p
                         className="flex bg-transparent"
                         onClick={() => {
@@ -144,8 +143,7 @@ const NavbarComponent = () => {
                           <span>{iconsMenu[index]}</span>{item.title}
                         </NavigationMenuLink>
                       </p>
-                    </NavigationMenuItem></div>
-
+                    </NavigationMenuItem>
                   );
                 })}
                 <ButtonComponent func={() => { }}><p onClick={() => {
