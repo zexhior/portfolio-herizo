@@ -3,9 +3,9 @@ import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import React, { ReactElement } from "react";
 
 type CustomFormParams = {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   formControl: UseFormReturn<any>;
   label: string;
-  labelColor?: string;
   name: string;
   children: ReactElement;
 } & React.InputHTMLAttributes<HTMLInputElement>;
@@ -13,7 +13,6 @@ type CustomFormParams = {
 const CustomForm = ({
   formControl,
   label,
-  labelColor,
   name,
   children,
   ...props

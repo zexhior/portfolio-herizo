@@ -26,7 +26,11 @@
         "placeHolder": "Entrez votre message"
       }
     ],
-    "sendText": "Envoyer"
+    "sendText": "Envoyer",
+    "dialog": {
+      "title": "Salutations",
+      "message": "Merci de m'avoir envoyé un message! Je vous repondrais aussi vite que possible."
+    }
   },
   "en": {
     "form": [
@@ -55,6 +59,10 @@
         "placeHolder": "Enter your message"
       }
     ],
-    "sendText": "Send"
+    "sendText": "Send",
+    "dialog": {
+      "title": "Greetings",
+      "message": "Thank you for sending me a message! I will respond as soon as possible."
+    }
   }
 }

@@ -16,8 +16,8 @@ import { useLanguage } from "@/provider/langprovider";
 const Home = () => {
 
   gsap.registerPlugin(useGSAP);
-  const [timeLineMain, setTimeLineMain] = useState(gsap.timeline({ repeat: - 1 }));
-  const [timeLineSub, setTimeLineSub] = useState(gsap.timeline({ repeat: - 1 }));
+  const timeLineMain = gsap.timeline({ repeat: - 1 });
+  const timeLineSub = gsap.timeline({ repeat: - 1 });
   const container = useRef(null);
   const { lang } = useLanguage();
   const [textMain, setTextMain] = useState<string[]>([]);
@@ -35,7 +35,7 @@ const Home = () => {
     })
   }, [lang])
 
-  const handlerAnimation = (id: string, timeline: any) => {
+  const handlerAnimation = (id: string, timeline: gsap.core.Timeline) => {
     timeline.set(id, {
       y: 100,
       opacity: 0,
@@ -83,7 +83,7 @@ const Home = () => {
         }</div>
         <div className="flex gap-4 mt-4">
           <ButtonComponent
-            func={(e) => { }}
+            func={() => { }}
             className="bg-gray-700 text-white hover:bg-gray-900 "
           >
             <a href="/CV/CV RASOLONJATOVO Brice Herizo.pdf" download="CV RASOLONJATOVO Brice Herizo.pdf">
@@ -114,15 +114,15 @@ const SkillsComponent = () => {
   const container = useRef<HTMLDivElement>(null);
   const [skillsTitle, setSkillsTitle] = useState<string>('');
   const [skillsState, setSkillsState] = useState<{ title: string, sections: ISkills[] }[]>([]);
-  const [timeLines, setTimeLines] = useState<gsap.core.Timeline[]>([]);
   const images = ["/frontend.png", "/backend.png", "/bd.png"]
   const imageSize = 400;
   const distance = 100;
-  const duration = 0.3;
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     fetch("/skills.json").then((response: any) => {
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       response.json().then((data: any) => {
         const skills: { skillsTitle: string, skills: { title: string, sections: ISkills[] }[] } = data[lang]
         setSkillsState(skills.skills)
@@ -148,46 +148,43 @@ const SkillsComponent = () => {
       const durationSection = 1;
       const durationImage = 0.2;
       const width = container.current.clientWidth;
-      setTimeLines((prev) => {
-        const newTimeLines = [];
-        for (let i = 0; i < skillsState.length; i++) {
-          gsap.set(`.skill-${i}`, { x: width })
-          gsap.set(`.skill-image-${i}`, { y: distance, opacity: 0 })
-          newTimeLines.push(gsap.timeline({
-            scrollTrigger: {
-              trigger: `#container-skill-${i}`,
-              start: "top center",
-              end: "bottom center",
-              onEnter: () => {
-                enterAnimation(i, durationSection, durationImage)
-              },
-              onEnterBack: () => {
-                enterAnimation(i, durationSection, durationImage)
-              },
-              onLeave: () => {
-                leaveAnimation(i, 1.5, durationImage, width)
-              },
-              onLeaveBack: () => {
-                leaveAnimation(i, 1.5, durationImage, width)
-              },
-            }
-          }))
-        }
-        return newTimeLines
-      })
+      const newTimeLines = [];
+      for (let i = 0; i < skillsState.length; i++) {
+        gsap.set(`.skill-${i}`, { x: width })
+        gsap.set(`.skill-image-${i}`, { y: distance, opacity: 0 })
+        newTimeLines.push(gsap.timeline({
+          scrollTrigger: {
+            trigger: `#container-skill-${i}`,
+            start: "top center",
+            end: "bottom center",
+            onEnter: () => {
+              enterAnimation(i, durationSection, durationImage)
+            },
+            onEnterBack: () => {
+              enterAnimation(i, durationSection, durationImage)
+            },
+            onLeave: () => {
+              leaveAnimation(i, 1.5, durationImage, width)
+            },
+            onLeaveBack: () => {
+              leaveAnimation(i, 1.5, durationImage, width)
+            },
+          }
+        }))
+      }
     }
   }, { scope: container, dependencies: [skillsState] });
 
   const icons = [
     [
-      <FaAngular className="text-6xl text-red-600" />,
-      <FaReact className="text-6xl text-blue-400" />,
+      <FaAngular className="text-6xl text-red-600" key={'angular-icon'} />,
+      <FaReact className="text-6xl text-blue-400" key="react-icon" />,
     ], [
-      <DiDjango size={100} className=" text-black" />,
-      <FaNode size={100} className=" text-green-500" />
+      <DiDjango size={100} className=" text-black" key="django-icon" />,
+      <FaNode size={100} className=" text-green-500" key="node-icon" />
     ], [
-      <BiLogoPostgresql size={100} className=" text-blue-900" />,
-      <BiLogoMongodb size={100} className=" text-green-400" />
+      <BiLogoPostgresql size={100} className=" text-blue-900" key="postgresql-icon" />,
+      <BiLogoMongodb size={100} className=" text-green-400" key="mongodb-icon" />
     ]
   ]
 
@@ -232,7 +229,7 @@ const SkillsComponent = () => {
           <div className="sticky w-full top-40 flex justify-center" style={{ height: imageSize }}>
             {
               images.map((image, index) => {
-                return <img className={`absolute skill-image-${index}`} src={image} alt="skills" width={imageSize} height={imageSize} key={`skill-image-${index}`} />
+                return <Image className={`absolute skill-image-${index}`} src={image} alt="skills" width={imageSize} height={imageSize} key={`skill-image-${index}`} />
               })
             }
           </div>
@@ -318,7 +315,7 @@ const FormationsComponent = () => {
             key={index}
           >
             <div className="flex h-80 w-ful lg:w-1/2 relative">
-              <img src={formation?.image} alt="ispm" className="w-full" style={{ objectFit: "contain" }} />
+              <Image src={formation?.image} alt="ispm" className="w-full" fill style={{ objectFit: "contain" }} />
             </div>
             <FormationSection formation={formation} index={index} />
           </div>

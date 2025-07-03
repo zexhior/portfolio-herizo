@@ -6,7 +6,6 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import { ButtonComponent } from "../button/button";
 import { useEffect, useState } from "react";
@@ -21,6 +20,7 @@ import { useGSAP } from "@gsap/react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { useLanguage } from "@/provider/langprovider";
 import Image from "next/image";
+import { LanguageContextType } from "@/app/types/languageType";
 
 type Link = {
   title: string;
@@ -28,16 +28,16 @@ type Link = {
 };
 
 const NavbarComponent = () => {
-  const { lang, setLang } = useLanguage();
+  const langage: LanguageContextType | null = useLanguage();
   const [open, setOpen] = useState(false);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const [menu, setMenu] = useState<Link[]>([]);
   const [contactText, setContactText] = useState<string>("");
   const iconsMenu = [
-    <FaTools size={20} />,
-    <FaGraduationCap size={20} />,
-    <FaBriefcase size={20} />,
-    <FaLaptopCode size={20} />
+    <FaTools size={20} key="icon-menu-1" />,
+    <FaGraduationCap size={20} key="icon-menu-2" />,
+    <FaBriefcase size={20} key="icon-menu-3" />,
+    <FaLaptopCode size={20} key="icon-menu-4" />
   ];
   const logo = '/logo/herizo-light.png';
 
@@ -46,12 +46,12 @@ const NavbarComponent = () => {
   useEffect(() => {
     fetch("/navbar.json").then(response => {
       response.json().then((data) => {
-        const result: { menu: Link[], contact: string } = data[lang];
+        const result: { menu: Link[], contact: string } = data[langage?.lang];
         setMenu(result.menu);
         setContactText(result.contact);
       })
     })
-  }, [lang])
+  }, [langage])
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -76,7 +76,7 @@ const NavbarComponent = () => {
   }
 
   const handlerChangeLang = (lang: string) => {
-    setLang(lang);
+    langage.setLang(lang);
     setIsOpenDropDown(false)
   }
 
@@ -85,10 +85,10 @@ const NavbarComponent = () => {
       className="nav flex items-center justify-between w-full fixed z-10 px-4 lg:px-32 py-4 lg:py-10"
     >
       <div className="flex gap-4">
-        <img src={logo} alt="logo" width={100} height={80} />
+        <Image src={logo} alt="logo" width={100} height={80} />
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="bg-slate-500 rounded-full text-white hover:text-gray-600 font-bold px-6 outline-none" onClick={handlerShowContext}>
-            {lang}
+            {langage.lang}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-slate-800 text-white border-md rounded-lg mt-2 w-24 p-2">
             <DropdownMenuItem className="text-lg font-bold hover:bg-slate-900 p-2 rounded-lg" onSelect={() => handlerChangeLang("fr")}>
@@ -104,13 +104,15 @@ const NavbarComponent = () => {
         <NavigationMenuList className="flex gap-8">
           {menu.map((item: Link, index: number) => {
             return (
-              <NavigationMenuItem key={index}>
-                <NavigationMenuLink className="bg-transparent text-white hover:text-gray-600 font-bold cursor-pointer" onClick={() => {
-                  handlerScrollTo(item.link);
-                }}>
-                  {item.title}
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+              <div key={index}>
+                <NavigationMenuItem >
+                  <NavigationMenuLink className="bg-transparent text-white hover:text-gray-600 font-bold cursor-pointer" onClick={() => {
+                    handlerScrollTo(item.link);
+                  }}>
+                    {item.title}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </div>
             );
           })}
           <NavigationMenuItem>
@@ -132,7 +134,7 @@ const NavbarComponent = () => {
                 </DrawerHeader>
                 {menu.map((item: Link, index: number) => {
                   return (
-                    <NavigationMenuItem key={index} className="v">
+                    <div key={index}><NavigationMenuItem >
                       <p
                         className="flex bg-transparent"
                         onClick={() => {
@@ -143,7 +145,8 @@ const NavbarComponent = () => {
                           <span>{iconsMenu[index]}</span>{item.title}
                         </NavigationMenuLink>
                       </p>
-                    </NavigationMenuItem>
+                    </NavigationMenuItem></div>
+
                   );
                 })}
                 <ButtonComponent func={() => { }}><p onClick={() => {

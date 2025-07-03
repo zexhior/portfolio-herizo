@@ -9,19 +9,10 @@ import { Textarea } from "../ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { useEffect, useState } from "react";
 import CustomForm from "../customForm/customForm";
-import Mailjet from "node-mailjet";
 import { useLanguage } from "@/provider/langprovider";
+import { FormType } from "@/app/types/form";
+import { contactSchema } from "@/app/types/contactSchema";
 
-const contactSchema = z.object({
-    name: z.string().nonempty({ message: "Votre nom ne devrait pas être vide" }).max(2000, { message: "Votre nom est trop" }),
-    subject: z.string().nonempty({ message: "L'objet de votre message ne devrait pas être vide" }).max(1000, { message: "Le sujet doit avoir au maximum 1000 caractères" }),
-    email: z.string().email({ message: "L'adresse e-mail n'est pas valide" }).nonempty({ message: "L'adresse e-mail ne devrait pas être vide" }),
-    message: z.string().nonempty({ message: "Le message ne devrait pas être vide" }).max(1000, { message: "Le message doit avoir au maximum 1000 caractères" }),
-})
-
-interface IFormComponent {
-    data?: Object | undefined | null
-}
 
 interface IForm {
     name: string
@@ -30,10 +21,11 @@ interface IForm {
     type: string
 }
 
-const FormComponent: React.FC<IFormComponent> = ({ data }) => {
+const FormComponent = ({ }) => {
     const { lang } = useLanguage();
+    const [dialog, setDialog] = useState<{ title: string, message: string }>({ title: "", message: "" })
     const [formParams, setFormParams] = useState<IForm[]>([])
-    const [contact, setContact] = useState<{ name: string, subject: string, email: string, message: string }>({ name: "", subject: "", email: "", message: "" })
+    const [contact, setContact] = useState<FormType>({ name: "", subject: "", email: "", message: "" })
     const [sendText, setSendText] = useState<string>("")
     const form = useForm<z.infer<typeof contactSchema>>({
         resolver: zodResolver(contactSchema),
@@ -49,16 +41,17 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
     useEffect(() => {
         fetch('/form.json').then(response => {
             response.json().then(data => {
-                const result: { form: IForm[], sendText: string } = data[lang]
+                const result: { form: IForm[], sendText: string, dialog: { title: string, message: string } } = data[lang]
                 setFormParams(result.form)
                 setSendText(result.sendText)
+                setDialog(result.dialog)
             })
         })
     }, [lang])
 
     const onSubmit = async (values: z.infer<typeof contactSchema>) => {
         try {
-            const result = await fetch("https://mail-service-1-bl7t.onrender.com/api/v1/send-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, message: `Nom : ${values.name}, email: ${values.email}, message: ${values.message}` }) })
+            await fetch("https://mail-service-1-bl7t.onrender.com/api/v1/send-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, message: `Nom : ${values.name}, email: ${values.email}, message: ${values.message}` }) })
             setContact({ ...values })
             setIsOpen(true)
         } catch (error) {
@@ -67,7 +60,7 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
     }
 
     const formItems = [
-        <Input />, <Input />, <Input />, <Textarea />
+        <Input key="input-1" />, <Input key="input-2" />, <Input key="input-3" />, <Textarea key="textarea-1" />
     ]
 
     return <div>
@@ -90,9 +83,9 @@ const FormComponent: React.FC<IFormComponent> = ({ data }) => {
                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle>Salutations {contact.name}</DialogTitle>
+                            <DialogTitle>{dialog.title} {contact.name}</DialogTitle>
                         </DialogHeader>
-                        <p>Merci de m'avoir envoyé un message! Je vous repondrais aussi vite que possible.</p>
+                        <p>{dialog.message}</p>
                     </DialogContent>
                 </Dialog>
             </form>

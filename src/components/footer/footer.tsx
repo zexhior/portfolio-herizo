@@ -3,7 +3,6 @@ import {
   FaGithub,
   FaHome,
   FaLinkedin,
-  FaMailchimp,
   FaPhone,
 } from "react-icons/fa";
 
