@@ -132,7 +132,21 @@ const SkillsComponent = () => {
   }, [container, lang])
 
   useGSAP(() => {
+    function leaveAnimation(iteration: number, durationSection: number, durationImage: number, width: number) {
+      gsap.to(`.skill-${iteration}`, { x: width, duration: durationSection, animationTimingFunction: "ease-out" })
+      gsap.to(`.skill-image-${iteration}`, { y: distance, opacity: 0, duration: durationImage, animationTimingFunction: "ease-out" })
+    }
+
+    function enterAnimation(iteration: number, durationSection: number, durationImage: number) {
+      gsap.to(`.skill-${iteration}`, { x: 0, duration: durationSection, animationTimingFunction: "ease-in" })
+      gsap.to(`.skill-image-${iteration}`, {
+        y: 0, opacity: 1, duration: durationImage,
+        animationTimingFunction: "ease-in",
+      });
+    }
     if (container?.current) {
+      const durationSection = 1;
+      const durationImage = 0.2;
       const width = container.current.clientWidth;
       setTimeLines((prev) => {
         const newTimeLines = [];
@@ -145,26 +159,16 @@ const SkillsComponent = () => {
               start: "top center",
               end: "bottom center",
               onEnter: () => {
-                gsap.to(`.skill-${i}`, { x: 0, duration: 0.7, animationTimingFunction: "ease-in" })
-                gsap.to(`.skill-image-${i}`, {
-                  y: 0, opacity: 1, duration: 0.2,
-                  animationTimingFunction: "ease-in",
-                });
+                enterAnimation(i, durationSection, durationImage)
               },
               onEnterBack: () => {
-                gsap.to(`.skill-${i}`, { x: 0, duration: 0.7, animationTimingFunction: "ease-in" })
-                gsap.to(`.skill-image-${i}`, {
-                  y: 0, opacity: 1, duration: 0.2,
-                  animationTimingFunction: "ease-in",
-                });
+                enterAnimation(i, durationSection, durationImage)
               },
               onLeave: () => {
-                gsap.to(`.skill-${i}`, { x: width, duration: 0.7, animationTimingFunction: "ease-in" })
-                gsap.to(`.skill-image-${i}`, { y: distance, opacity: 0, duration: 0.2, animationTimingFunction: "ease-in" })
+                leaveAnimation(i, 1.5, durationImage, width)
               },
               onLeaveBack: () => {
-                gsap.to(`.skill-${i}`, { x: width, duration: 0.7, animationTimingFunction: "ease-in" })
-                gsap.to(`.skill-image-${i}`, { y: distance, opacity: 0, duration: 0.2, animationTimingFunction: "ease-in" })
+                leaveAnimation(i, 1.5, durationImage, width)
               },
             }
           }))
