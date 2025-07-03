@@ -1,0 +1,256 @@
+{
+  "fr": {
+    "skillsTitle": "Les différents langages et technologies que j'utilise",
+    "skills": [
+      {
+        "title": "Front-end",
+        "sections": [
+          {
+            "index": "2-angular",
+            "techno": "Angular",
+            "sections": [
+              "Angular CLI",
+              "Modules & Lazy loading",
+              "Composants",
+              "Directives",
+              "Pipes personnalisés",
+              "Formulaires réactifs",
+              "Template-driven forms",
+              "Services",
+              "Dependency Injection",
+              "Routing avancé",
+              "RxJS",
+              "HttpClient"
+            ]
+          },
+          {
+            "index": "1-react",
+            "techno": "React",
+            "sections": [
+              "React Router",
+              "Axios",
+              "ReduxToolkit / Context API",
+              "TailwindCSS / Sass",
+              "ShadCN",
+              "Vite / Next.js",
+              "Jest / Testing Library"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Back-end",
+        "sections": [
+          {
+            "index": "3-django",
+            "techno": "Django",
+            "sections": [
+              "Django classique",
+              "Django REST Framework",
+              "ORM Django",
+              "Authentification JWT",
+              "Formulaires Django",
+              "Middlewares personnalisés",
+              "Django TestCase",
+              "Déploiement (Docker/Heroku)",
+              "Intégration avec des bases"
+            ]
+          },
+          {
+            "index": "4-node-express",
+            "techno": "Node/Express",
+            "sections": [
+              "routes",
+              "middlewares",
+              "gestion des erreurs",
+              "modules",
+              "file system",
+              "streams",
+              "JWT",
+              "sessions",
+              "bcrypt",
+              "body-parser",
+              "helmet",
+              "cors",
+              "multer"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "SGBD",
+        "sections": [
+          {
+            "index": "5-postgreSQL",
+            "techno": "PostgreSQL",
+            "sections": [
+              "Modélisation relationnelle",
+              "Requêtes SQL complexes",
+              "Fonctions personnalisées",
+              "Index",
+              "vues matérialisées",
+              "triggers",
+              "Transactions",
+              "contraintes",
+              "Sauvegardes et restauration",
+              "pgAdmin",
+              "psql",
+              "ORM",
+              "Django ORM",
+              "Prisma…",
+              "Sécurité et gestion des rôles"
+            ]
+          },
+          {
+            "index": "6-mongodb",
+            "techno": "MongoDB",
+            "sections": [
+              "Modélisation NoSQL",
+              "Mongoose",
+              "CRUD",
+              "Aggregation Pipeline",
+              "Indexation",
+              "Relations ObjectId",
+              "Gestion des validations",
+              "middleware",
+              "Mongoose",
+              "Sanitisation",
+              "rate limiting",
+              "JWT",
+              "Sauvegarde/restauration",
+              "MongoDB Compass",
+              "Atlas"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "en": {
+    "skillsTitle": "The various languages and technologies I use",
+    "skills": [
+      {
+        "title": "Front-end",
+        "sections": [
+          {
+            "index": "2-angular",
+            "techno": "Angular",
+            "sections": [
+              "Angular CLI",
+              "Modules & Lazy loading",
+              "Components",
+              "Directives",
+              "Custom Pipes",
+              "Reactive Forms",
+              "Template-driven Forms",
+              "Services",
+              "Dependency Injection",
+              "Advanced Routing",
+              "RxJS",
+              "HttpClient"
+            ]
+          },
+          {
+            "index": "1-react",
+            "techno": "React",
+            "sections": [
+              "React Router",
+              "Axios",
+              "ReduxToolkit / Context API",
+              "TailwindCSS / Sass",
+              "ShadCN",
+              "Vite / Next.js",
+              "Jest / Testing Library"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Back-end",
+        "sections": [
+          {
+            "index": "3-django",
+            "techno": "Django",
+            "sections": [
+              "Classic Django",
+              "Django REST Framework",
+              "Django ORM",
+              "JWT Authentication",
+              "Django Forms",
+              "Custom Middlewares",
+              "Django TestCase",
+              "Deployment (Docker/Heroku)",
+              "Database Integration"
+            ]
+          },
+          {
+            "index": "4-node-express",
+            "techno": "Node/Express",
+            "sections": [
+              "Routes",
+              "Middlewares",
+              "Error Handling",
+              "Modules",
+              "File System",
+              "Streams",
+              "JWT",
+              "Sessions",
+              "bcrypt",
+              "body-parser",
+              "helmet",
+              "cors",
+              "multer"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "DBMS",
+        "sections": [
+          {
+            "index": "5-postgreSQL",
+            "techno": "PostgreSQL",
+            "sections": [
+              "Relational Modeling",
+              "Complex SQL Queries",
+              "Custom Functions",
+              "Indexes",
+              "Materialized Views",
+              "Triggers",
+              "Transactions",
+              "Constraints",
+              "Backup and Restore",
+              "pgAdmin",
+              "psql",
+              "ORM",
+              "Django ORM",
+              "Prisma…",
+              "Security and Role Management"
+            ]
+          },
+          {
+            "index": "6-mongodb",
+            "techno": "MongoDB",
+            "sections": [
+              "NoSQL Modeling",
+              "Mongoose",
+              "CRUD",
+              "Aggregation Pipeline",
+              "Indexing",
+              "ObjectId Relationships",
+              "Validation Management",
+              "Middleware",
+              "Mongoose",
+              "Sanitization",
+              "Rate Limiting",
+              "JWT",
+              "Backup/Restore",
+              "MongoDB Compass",
+              "Atlas"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

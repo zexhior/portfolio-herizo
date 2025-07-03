@@ -1,0 +1,40 @@
+{
+  "fr": {
+    "title": "Formations",
+    "formations": [
+      {
+        "image": "/irisoa.png",
+        "degree": "Diplôme Licence",
+        "institut": "Institut Supérieur Polytechnique de Madagascar",
+        "description": "Obtention du diplôme de licence en informatique de gestion, génie logiciel et intelligence artificielle.",
+        "years": "2017-2020"
+      },
+      {
+        "image": "/ISPMBatiment.png",
+        "degree": "Diplôme Master",
+        "institut": "Institut Supérieur Polytechnique de Madagascar",
+        "description": "Obtention du diplôme de master en informatique de gestion, génie logiciel et intelligence artificielle.",
+        "years": "2020-2023"
+      }
+    ]
+  },
+  "en": {
+    "title": "Education",
+    "formations": [
+      {
+        "image": "/irisoa.png",
+        "degree": "Bachelor's Degree",
+        "institut": "Institut Supérieur Polytechnique de Madagascar",
+        "description": "Obtained a bachelor's degree in Management Information Systems, Software Engineering, and Artificial Intelligence.",
+        "years": "2017–2020"
+      },
+      {
+        "image": "/ISPMBatiment.png",
+        "degree": "Master's Degree",
+        "institut": "Institut Supérieur Polytechnique de Madagascar",
+        "description": "Obtained a master's degree in Management Information Systems, Software Engineering, and Artificial Intelligence.",
+        "years": "2020–2023"
+      }
+    ]
+  }
+}
